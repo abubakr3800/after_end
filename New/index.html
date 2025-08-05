@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lighting Quality Simulator</title>
+    
+    <link rel="icon" type="image/x-icon" href="assets/favicon.svg">
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="text/javascript">
+    //   document.oncontextmenu = new Function("return false;");
+    //   document.onselectstart = new Function("return false;");
+    </script>
+  </head>
+
+  
+  <body class="bg-body">
+    <div class="credits">
+      <div class="credits-text">
+        <p>Powered by</p>
+      </div>
+      <a href="https://shortcircuitcompany.com" target="_blank">
+        <img src="assets/SClogo.svg" alt="this application is powered by Short Circuit Company" class="sc-logo">
+      </a>
+    </div>
+
+    <header class="main-header">
+      <div class="header-container">
+        <div>
+          <a href="index.html">
+            <img src="assets/logo-Light.svg" alt="Logo" class="site-logo">
+          </a>
+        </div>
+        <div>
+          <nav class="main-nav">
+            <input type="checkbox" id="nav-toggle" class="nav-toggle">
+            <label for="nav-toggle" class="nav-toggle-label">
+              <span class="nav-toggle-icon"></span>
+            </label>
+            <ul class="nav-menu">
+              <li class="nav-item">
+                <a class="nav-link" href="about.html">About SChools</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="Documentation.html">Documentation</a>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link nav-link-btn" popovertarget="contactus">
+                  Contact us
+                </button>
+              </li>
+              <li class="nav-item">
+                <a href="https://facebook.com/shortcircuiteg" target="_blank" class="nav-link">
+                  <img src="assets/facebook-logo.svg" alt="facebook" class="social-icon">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="https://instagram.com/shortcircuiteg" target="_blank" class="nav-link">
+                  <img src="assets/instagram-logo.svg" alt="instagram" class="social-icon">
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="https://www.linkedin.com/company/short-circuit-company" target="_blank" class="nav-link">
+                  <img src="assets/linkedin-logo.svg" alt="linkedin" class="social-icon">
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <div class="overlay"></div>
+
+    <main class="main-content">
+      <div class="hero-section">
+          <h1>toward a brighter education</h1>
+      </div>
+
+        <div class="form-card">
+            <h2>Lighting Quality Simulator</h2>
+            
+            <form class="simulation-form">
+              <div class="form-group">
+                <label for="grade" class="form-label">Select Grade:</label>
+                <select id="grade" class="form-select">
+                  <option value="">Choose Grade</option>
+                  <option value="kinder">Kindergarten</option>
+                  <option value="primary">Primary</option>
+                  <option value="adults">Secondary</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="environment" class="form-label">Select Environment:</label>
+                <select id="environment" class="form-select">
+                  <option value="">Choose Environment</option>
+                  <option value="classroom">Classroom</option>
+                  <option value="playground">Playground</option>
+                  <option value="laboratory">Laboratory</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="simulateLighting()">
+                  Simulate
+                </button>
+              </div>
+
+              <div class="form-group">
+                <button type="button" class="btn btn-danger" onclick="goToClassroom()">
+                  Go to Classroom Simulator
+                </button>
+              </div>
+            </form>
+
+            <div id="results" class="results-container"></div>
+              
+        </div>
+    </main>
+
+    <script>
+      async function simulateLighting() {
+        const grade = document.getElementById("grade").value;
+        const environment = document.getElementById("environment").value;
+        const resultDiv = document.getElementById("results");
+        resultDiv.innerHTML = "";
+
+        if (!grade || !environment) {
+          alert("Please select both grade and environment.");
+          return;
+        }
+
+        try {
+          const response = await fetch("api/data.json");
+          const lightingData = await response.json();
+          const data = lightingData[grade];
+
+          let resultsHTML = `
+            <div class="results-card">
+              <div class="results-card-body">
+                <h3>Age Range: ${data.age_range}</h3>
+                <h3>Environment: ${environment}</h3>
+          `;
+
+          for (let param in data) {
+            if (param === "age_range") continue;
+            resultsHTML += `<h5 class="text-info">${param}</h5><ul class="results-list">`;
+            data[param].forEach((entry) => {
+              resultsHTML += `
+                <li class="results-item">
+                  <div><h4>Range:</h4> <p>${entry.range.min}–${entry.range.max} ${entry.range.unit}</p></div>
+                  <div><h4>Rating:</h4> <p>${entry.rating}</p></div>
+                  <div><h4>Reason:</h4> <p>${entry.reason}</p></div>
+                  <div><h4>Recommendation:</h4> <p>${entry.recommendation}</p></div>
+                </li>
+              `;
+            });
+            resultsHTML += `</ul>`;
+          }
+
+          resultsHTML += `</div></div>`;
+          resultDiv.innerHTML = resultsHTML;
+        } catch (err) {
+          console.error("Failed to load lighting data:", err);
+          resultDiv.innerHTML = `
+            <div class="alert-danger">
+              Failed to load lighting data. Please try again later.
+            </div>
+          `;
+        }
+      }
+
+      function goToClassroom() {
+        const grade = document.getElementById("grade").value;
+        const environment = document.getElementById("environment").value;
+
+        if (!grade || !environment) {
+          alert("Please select both grade and environment before proceeding to the classroom simulator.");
+          return;
+        }
+
+        // Store the selected data in cookies
+        const selectedData = {
+          grade: grade,
+          environment: environment,
+          timestamp: new Date().toISOString()
+        };
+
+        // Set cookies with the selected data
+        document.cookie = `selectedGrade=${grade}; path=/; max-age=3600`; // 1 hour expiry
+        document.cookie = `selectedEnvironment=${environment}; path=/; max-age=3600`;
+        document.cookie = `selectedData=${JSON.stringify(selectedData)}; path=/; max-age=3600`;
+
+        // Redirect to classroom.html
+        window.location.href = "classroom.html";
+      }
+    </script>
+  </body>
+</html>

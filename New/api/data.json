@@ -1,0 +1,395 @@
+{
+    "kinder": {
+        "age_range": "3-6",
+        "CRI": [
+            {
+                "range": {
+                    "min": 90,
+                    "max": 100,
+                    "unit": ""
+                },
+                "rating": "good",
+                "reason": "High CRI is essential for color-sensitive activities like drawing and learning objects.",
+                "recommendation": "Use LEDs with CRI ≥90 in art and play zones."
+            },
+            {
+                "range": {
+                    "min": 0,
+                    "max": 80,
+                    "unit": ""
+                },
+                "rating": "bad",
+                "reason": "Poor color accuracy can impair visual development and reduce engagement.",
+                "recommendation": "Avoid low-CRI fixtures; ensure color accuracy for young learners."
+            }
+        ],
+        "CCT": [
+            {
+                "range": {
+                    "min": 2700,
+                    "max": 3000,
+                    "unit": "K"
+                },
+                "rating": "good",
+                "reason": "Warm light creates a comforting and calm environment, supporting emotional security.",
+                "recommendation": "Install warm-white LEDs in nurseries and playrooms."
+            },
+            {
+                "range": {
+                    "min": 4000,
+                    "max": 6500,
+                    "unit": "K"
+                },
+                "rating": "bad",
+                "reason": "Cool light may overstimulate young children and disrupt rest patterns.",
+                "recommendation": "Avoid cool CCT in preschool areas; use warmer tones instead."
+            }
+        ],
+        "Lux": [
+            {
+                "range": {
+                    "min": 300,
+                    "max": 350,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Ensures sufficient brightness for play without causing overstimulation.",
+                "recommendation": "Use general lighting plus dimmable zones for naps and quiet time."
+            },
+            {
+                "range": {
+                    "min": 0,
+                    "max": 200,
+                    "unit": "lux"
+                },
+                "rating": "bad",
+                "reason": "Too dim lighting hinders visual growth and safe movement.",
+                "recommendation": "Maintain minimum lighting of 300 lux in active areas."
+            }
+        ],
+        "UGR": [
+            {
+                "range": {
+                    "min": 0,
+                    "max": 22,
+                    "unit": ""
+                },
+                "rating": "good",
+                "reason": "Minimizes visual discomfort for sensitive young eyes.",
+                "recommendation": "Use fixtures with diffusers and avoid direct beam paths."
+            },
+            {
+                "range": {
+                    "min": 25,
+                    "max": 30,
+                    "unit": ""
+                },
+                "rating": "bad",
+                "reason": "High glare increases distraction and may affect behavior.",
+                "recommendation": "Use matte surfaces and indirect light fixtures."
+            }
+        ],
+        "Flicker": [
+            {
+                "range": {
+                    "min": 0,
+                    "max": 1,
+                    "unit": "%"
+                },
+                "rating": "good",
+                "reason": "Flicker-free lighting prevents headaches and overstimulation in sensitive young children.",
+                "recommendation": "Use flicker-free LED drivers, especially in special needs or nap zones."
+            },
+            {
+                "range": {
+                    "min": 5,
+                    "max": 100,
+                    "unit": "%"
+                },
+                "rating": "bad",
+                "reason": "Visible flicker can increase hyperactivity and discomfort.",
+                "recommendation": "Avoid budget LEDs with unstable drivers."
+            }
+        ],
+        "Uniformity": [
+            {
+                "range": {
+                    "min": 0.4,
+                    "max": 1.0,
+                    "unit": "U₀"
+                },
+                "rating": "good",
+                "reason": "Ensures even lighting across play and learning areas.",
+                "recommendation": "Design layout with consistent lux across all child-accessible zones."
+            }
+        ],
+        "Melanopic_EDI": [
+            {
+                "range": {
+                    "min": 50,
+                    "max": 100,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Supports circadian rhythm alignment and sleep cycle stability.",
+                "recommendation": "Use dynamic white lighting to match morning/day cycles."
+            }
+        ],
+        "Vertical_Illuminance": [
+            {
+                "range": {
+                    "min": 100,
+                    "max": 150,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Helps young children perceive facial cues and vertical surfaces.",
+                "recommendation": "Ensure soft uplight or wall washers to enhance facial recognition."
+            }
+        ],
+        "Exposure_Duration": [
+            {
+                "range": {
+                    "min": 2,
+                    "max": 6,
+                    "unit": "hours"
+                },
+                "rating": "good",
+                "reason": "Controlled exposure supports rest/activity balance.",
+                "recommendation": "Use dimmable lighting with natural daylight rhythms."
+            }
+        ]
+    },
+    "primary": {
+        "age_range": "6-12",
+        "CRI": [
+            {
+                "range": {
+                    "min": 80,
+                    "max": 90,
+                    "unit": ""
+                },
+                "rating": "medium",
+                "reason": "Acceptable for general classroom tasks but suboptimal for color-critical activities.",
+                "recommendation": "Use CRI ≥90 in art, science, and craft zones."
+            }
+        ],
+        "CCT": [
+            {
+                "range": {
+                    "min": 3500,
+                    "max": 4000,
+                    "unit": "K"
+                },
+                "rating": "good",
+                "reason": "Neutral white light enhances focus and sustained attention.",
+                "recommendation": "Use cool-neutral white in classrooms for academic performance."
+            }
+        ],
+        "Lux": [
+            {
+                "range": {
+                    "min": 500,
+                    "max": 700,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Promotes alertness and visibility during writing and reading tasks.",
+                "recommendation": "Use uniform desk lighting and combine with daylight."
+            }
+        ],
+        "UGR": [
+            {
+                "range": {
+                    "min": 0,
+                    "max": 19,
+                    "unit": ""
+                },
+                "rating": "good",
+                "reason": "Low glare prevents eye strain during long sessions.",
+                "recommendation": "Ensure glare-controlled luminaires are used near screens and whiteboards."
+            }
+        ],
+        "Flicker": [
+            {
+                "range": {
+                    "min": 0,
+                    "max": 1,
+                    "unit": "%"
+                },
+                "rating": "good",
+                "reason": "Flicker-free lighting reduces visual fatigue and supports attention.",
+                "recommendation": "Use high-quality drivers in classrooms."
+            }
+        ],
+        "Uniformity": [
+            {
+                "range": {
+                    "min": 0.6,
+                    "max": 1.0,
+                    "unit": "U₀"
+                },
+                "rating": "good",
+                "reason": "Prevents contrast fatigue and supports reading across desks.",
+                "recommendation": "Use indirect lighting and uplight portions for even light distribution."
+            }
+        ],
+        "Melanopic_EDI": [
+            {
+                "range": {
+                    "min": 100,
+                    "max": 200,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Boosts alertness and supports circadian entrainment in early school hours.",
+                "recommendation": "Use cooler light in morning periods (e.g. 8–11 AM)."
+            }
+        ],
+        "Vertical_Illuminance": [
+            {
+                "range": {
+                    "min": 150,
+                    "max": 200,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Improves visibility of whiteboards and teacher faces.",
+                "recommendation": "Install asymmetric fixtures for boards and vertical zones."
+            }
+        ],
+        "Exposure_Duration": [
+            {
+                "range": {
+                    "min": 4,
+                    "max": 8,
+                    "unit": "hours"
+                },
+                "rating": "good",
+                "reason": "Well-distributed exposure improves attention span and mood.",
+                "recommendation": "Use tunable lighting to reduce fatigue by afternoon."
+            }
+        ]
+    },
+    "adults": {
+        "age_range": "12-18",
+        "CRI": [
+            {
+                "range": {
+                    "min": 90,
+                    "max": 100,
+                    "unit": ""
+                },
+                "rating": "good",
+                "reason": "Necessary for color-accurate work in labs and design tasks.",
+                "recommendation": "Use high-CRI LEDs in technical rooms and study labs."
+            }
+        ],
+        "CCT": [
+            {
+                "range": {
+                    "min": 4000,
+                    "max": 5000,
+                    "unit": "K"
+                },
+                "rating": "good",
+                "reason": "Cool white supports cognitive alertness, especially during exams and screen use.",
+                "recommendation": "Use tunable CCT systems to shift between exam, relax, and discussion modes."
+            },
+            {
+                "range": {
+                    "min": 2700,
+                    "max": 3000,
+                    "unit": "K"
+                },
+                "rating": "bad",
+                "reason": "Warm tones can make students sleepy or unfocused during critical thinking tasks.",
+                "recommendation": "Only use warmer tones in break zones or after-hours."
+            }
+        ],
+        "Lux": [
+            {
+                "range": {
+                    "min": 500,
+                    "max": 750,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Ensures sufficient brightness for visual comfort in academic tasks.",
+                "recommendation": "Enhance light with task-specific LEDs in exams or digital work."
+            }
+        ],
+        "UGR": [
+            {
+                "range": {
+                    "min": 0,
+                    "max": 19,
+                    "unit": ""
+                },
+                "rating": "good",
+                "reason": "Essential in screen-heavy environments to avoid digital eye strain.",
+                "recommendation": "Combine low-glare LEDs with anti-reflective work surfaces."
+            }
+        ],
+        "Flicker": [
+            {
+                "range": {
+                    "min": 0,
+                    "max": 0.5,
+                    "unit": "%"
+                },
+                "rating": "good",
+                "reason": "Crucial for screen-based work to prevent migraines and reduce fatigue.",
+                "recommendation": "Use certified flicker-free lighting in digital classrooms and labs."
+            }
+        ],
+        "Uniformity": [
+            {
+                "range": {
+                    "min": 0.7,
+                    "max": 1.0,
+                    "unit": "U₀"
+                },
+                "rating": "good",
+                "reason": "Helps reduce contrast strain during high-focus tasks like exams.",
+                "recommendation": "Uniform ceiling + task lighting is recommended."
+            }
+        ],
+        "Melanopic_EDI": [
+            {
+                "range": {
+                    "min": 150,
+                    "max": 250,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "High melanopic content aligns with teen biological delays in melatonin cycles.",
+                "recommendation": "Use blue-enriched morning light to support alertness."
+            }
+        ],
+        "Vertical_Illuminance": [
+            {
+                "range": {
+                    "min": 200,
+                    "max": 300,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Enhances visibility of facial expressions and writing surfaces in lecture settings.",
+                "recommendation": "Use adjustable wall washers and teacher spot lighting."
+            }
+        ],
+        "Exposure_Duration": [
+            {
+                "range": {
+                    "min": 6,
+                    "max": 9,
+                    "unit": "hours"
+                },
+                "rating": "good",
+                "reason": "Extended exposure to high-quality light supports academic performance and cognitive rhythm.",
+                "recommendation": "Use dynamic CCT to mimic natural daylight cycle."
+            }
+        ]
+    }
+}

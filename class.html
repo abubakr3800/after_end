@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.svg">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        // document.oncontextmenu = new Function("return false;");
+        // document.onselectstart = new Function("return false;");
+    </script>
+
+    <style>
+        .text-muted{
+            color: #aaa !important;
+        }
+        
+        /* Fix text wrapping issues */
+        .card-body {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        .alert {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+        }
+        
+        /* Ensure cards have consistent height */
+        .card {
+            height: 100%;
+        }
+        
+        /* Prevent text overflow in parameter names */
+        .text-info {
+            word-break: break-word;
+        }
+        
+        /* Animated effects for lighting simulation */
+        .classroom-img {
+            transition: opacity 0.8s ease, filter 0.5s;
+        }
+        
+        .blurred {
+            filter: blur(5px);
+            opacity: 0.4;
+        }
+        
+        .flicker {
+            animation: flickerAnim 0.2s infinite;
+        }
+        
+        @keyframes flickerAnim {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+        
+        #appendImage {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #appendImage canvas {
+            transition: all 0.5s ease-in-out;
+            max-height: 400px;
+            object-fit: cover;
+            width: 100%;
+        }
+        
+        /* Canvas-based lighting effects */
+        .lighting-canvas {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Preloader Styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .preloader-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .preloader-gif {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+        }
+        
+        .preloader-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-top: 15px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+    </style>
+    
+    <title>SChools - Classroom Simulator</title>
+</head>
+
+<body class="bg-dark text-white">
+    <!-- Credits Section -->
+    <div class="position-fixed top-50 end-0 translate-middle-y bg-light text-dark p-3 rounded-start shadow" style="z-index: 1050;">
+        <div class="text-center mb-2">
+            <p class="mb-0 small fw-bold">Powered by</p>
+        </div>
+        <a href="https://shortcircuitcompany.com" target="_blank">
+            <img src="assets/SClogo.svg" alt="this application is powered by Short Circuit Company" class="img-fluid" style="max-width: 60px;">
+        </a>
+    </div>
+    
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <img src="assets/SCloading.gif" alt="Loading..." class="preloader-gif">
+            <div class="preloader-text">Loading Lighting Simulator...</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="border-bottom border-light">
+        <div class="container-fluid">
+            <div class="row align-items-center py-3">
+                <div class="col-md-6">
+                    <a href="index.html">
+                        <img src="assets/logo-Light.svg" alt="Logo" class="img-fluid" style="max-height: 40px;">
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <nav class="navbar navbar-expand-lg navbar-dark">
+                        <div class="container-fluid">
+                            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                                <span class="navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="navbarNav">
+                                <ul class="navbar-nav ms-auto align-items-center">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="about.html">About SChools</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="Documentation.html">Documentation</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="btn btn-link nav-link" popovertarget="contactus">Contact us</button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="https://facebook.com/shortcircuiteg" target="_blank" class="nav-link">
+                                            <img src="assets/facebook-logo.svg" alt="facebook" class="img-fluid" style="width: 20px; filter: brightness(0) invert(1);">
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="https://instagram.com/shortcircuiteg" target="_blank" class="nav-link">
+                                            <img src="assets/instagram-logo.svg" alt="instagram" class="img-fluid" style="width: 20px; filter: brightness(0) invert(1);">
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="https://www.linkedin.com/company/short-circuit-company" target="_blank" class="nav-link">
+                                            <img src="assets/linkedin-logo.svg" alt="linkedin" class="img-fluid" style="width: 20px; filter: brightness(0) invert(1);">
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-fluid">
+        <!-- Selected Data Display -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card bg-secondary bg-opacity-25 text-white border-0 rounded-4 p-3">
+                    <div class="card-body">
+                        <h4 class="text-danger mb-3">Selected Parameters</h4>
+                        <div id="selectedDataDisplay" class="row text-white">
+                            <!-- Selected data will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulator Hero -->
+        <div class="row mt-4">
+            <div class="col-12 position-relative" id="simulatorHero">
+                <div class="appendImage" id="appendImage">
+                    <div class="position-relative">
+                        <canvas id="lightingCanvas" class="lighting-canvas"></canvas>
+                        <!-- <div class="position-absolute top-0 end-0 p-2">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-sm btn-outline-light" onclick="cycleToPreviousImage()" title="Previous Image">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-light" onclick="cycleToNextImage()" title="Next Image">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div> -->
+                        <!-- <div class="position-absolute bottom-0 start-0 p-2">
+                            <small class="text-light bg-dark bg-opacity-75 px-2 py-1 rounded">
+                                <i class="fas fa-image me-1"></i>
+                                <span id="imageCounter">Image 1</span>
+                            </small>
+                        </div> -->
+                    </div>
+                </div>
+                <!-- <img src="assets/ChatGPT Image Aug 3, 2025, 11_32_14 PM.png" alt="Classroom Background" class="img-fluid w-100" style="max-height: 400px; object-fit: cover;"> -->
+                <!-- <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div> -->
+            </div>
+        </div>
+
+        <!-- Controls Section -->
+        <div class="row justify-content-center mt-4">
+            <div class="col-lg-12 col-md-10 col-12">
+                <div class="card bg-secondary text-white bg-opacity-25 border-0 rounded-4 p-4">
+                    <div class="card-body">
+                        <h3 class="text-center text-danger mb-4">Lighting Controls</h3>
+                        
+                        <div class="row g-4">
+
+                            <div class="col-6">
+                                <div class="col-12">
+                                    <div class="controller">
+                                        <label for="cctSlider" class="form-label">
+                                            CCT (K): <span id="cctValue" class="text-warning">6500</span>
+                                            <small class="text-muted d-block" id="cctRange">Range: Loading...</small>
+                                        </label>
+                                        <input type="range" id="cctSlider" class="form-range" min="1000" max="10000" value="6500" step="100">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="controller">
+                                        <label for="criSlider" class="form-label">
+                                            CRI: <span id="criValue" class="text-warning">80</span>
+                                            <small class="text-muted d-block" id="criRange">Range: Loading...</small>
+                                        </label>
+                                        <input type="range" id="criSlider" class="form-range" min="0" max="100" value="80" step="1">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="controller">
+                                        <label for="flickerSlider" class="form-label">
+                                            Flicker (HZ): <span id="flickerValue" class="text-warning">90</span>
+                                            <small class="text-muted d-block" id="flickerRange">Range: Loading...</small>
+                                        </label>
+                                        <input type="range" id="flickerSlider" class="form-range" min="0" max="100" value="1" step="0.5">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-12">
+                                    <div class="controller">
+                                        <label for="glareSlider" class="form-label">
+                                            Glare (UGR): <span id="glareValue" class="text-warning">6</span>
+                                            <small class="text-muted d-block" id="glareRange">Range: Loading...</small>
+                                        </label>
+                                        <input type="range" id="glareSlider" class="form-range" min="1" max="28" value="6" step="1">
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="col-12">
+                                    <div class="controller">
+                                        <label for="uniformitySlider" class="form-label">
+                                            Uniformity: <span id="uniformityValue" class="text-warning">0.7</span>
+                                            <small class="text-muted d-block" id="uniformityRange">Range: Loading...</small>
+                                        </label>
+                                        <input type="range" id="uniformitySlider" class="form-range" min="0" max="1" value="0.7" step="0.1">
+                                    </div>
+                                </div> -->
+                                
+                                <!-- <div class="col-12">
+                                    <div class="controller">
+                                        <label for="melanopicSlider" class="form-label">
+                                            Melanopic EDI: <span id="melanopicValue" class="text-warning">200</span>
+                                            <small class="text-muted d-block" id="melanopicRange">Range: Loading...</small>
+                                        </label>
+                                        <input type="range" id="melanopicSlider" class="form-range" min="0" max="500" value="200" step="10">
+                                    </div>
+                                </div> -->
+                                
+                                <div class="col-12">
+                                    <div class="controller">
+                                        <label for="verticalSlider" class="form-label">
+                                            Vertical Illuminance (lux): <span id="verticalValue" class="text-warning">300</span>
+                                            <small class="text-muted d-block" id="verticalRange">Range: Loading...</small>
+                                        </label>
+                                        <input type="range" id="verticalSlider" class="form-range" min="0" max="1000" value="300" step="10">
+                                    </div>
+                                </div>
+                                
+                                <!-- <div class="col-12">
+                                    <div class="controller">
+                                        <label for="exposureSlider" class="form-label">
+                                            Exposure Duration (hours): <span id="exposureValue" class="text-warning">8</span>
+                                            <small class="text-muted d-block" id="exposureRange">Range: Loading...</small>
+                                        </label>
+                                        <input type="range" id="exposureSlider" class="form-range" min="1" max="24" value="8" step="1">
+                                    </div>
+                                </div> -->
+                                
+                                <div class="col-12">
+                                    <div class="controller">
+                                        <label for="luxSlider" class="form-label">
+                                            Lux: <span id="luxValue" class="text-warning">500</span>
+                                            <small class="text-muted d-block" id="luxRange">Range: Loading...</small>
+                                        </label>
+                                        <input type="range" id="luxSlider" class="form-range" min="0" max="1000" value="500" step="10">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row g-4" id="recommendationCards">
+                                    <!-- Recommendation cards will be dynamically generated here -->
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- <div class="text-center mt-4">
+                            <button type="button" class="btn btn-danger btn-lg px-5" onclick="compareValues()">
+                                Compare with Recommendations
+                            </button>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12 col-12">
+                <!-- <div class="appendImage" id="appendImage">
+                    <div class="position-relative">
+                        <canvas id="lightingCanvas" class="lighting-canvas"></canvas>
+                        <div class="position-absolute top-0 end-0 p-2">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-sm btn-outline-light" onclick="cycleToPreviousImage()" title="Previous Image">
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <button type="button" class="btn btn-sm btn-outline-light" onclick="cycleToNextImage()" title="Next Image">
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="position-absolute bottom-0 start-0 p-2">
+                            <small class="text-light bg-dark bg-opacity-75 px-2 py-1 rounded">
+                                <i class="fas fa-image me-1"></i>
+                                <span id="imageCounter">Image 1</span>
+                            </small>
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+        <!-- Comparison Results -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div id="comparisonResults" class="card bg-dark border-secondary rounded-4" style="display: none;">
+                    <div class="card-body">
+                        <h4 class="text-danger mb-3">Comparison Results</h4>
+                        <div id="comparisonContent">
+                            <!-- Comparison results will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Cards -->
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="row g-4">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">CCT (Color Temperature)</h5>
+                                <p class="text-light">Color temperature affects mood and concentration. Warmer temperatures (2700K-3000K) are better for young children.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">CRI (Color Rendering Index)</h5>
+                                <p class="text-light">CRI measures how accurately colors are rendered. Higher CRI (90+) is essential for educational activities.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">Flicker</h5>
+                                <p class="text-light">Flicker can cause eye strain and headaches. Lower flicker percentages are better for learning environments.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">Glare (UGR)</h5>
+                                <p class="text-light">Unified Glare Rating measures visual comfort. Lower UGR values provide better visual comfort.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">Uniformity</h5>
+                                <p class="text-light">Uniformity measures the consistency of lighting across a space. Higher values indicate more even lighting distribution.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">Melanopic EDI</h5>
+                                <p class="text-light">Melanopic Equivalent Daylight Illuminance affects circadian rhythms and alertness. Higher values promote better wakefulness.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">Vertical Illuminance</h5>
+                                <p class="text-light">Vertical illuminance measures light falling on vertical surfaces. Important for visual comfort and task performance.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">Exposure Duration</h5>
+                                <p class="text-light">Exposure duration affects the cumulative impact of lighting on health and performance. Longer exposure requires more careful consideration.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">Lux (Illuminance)</h5>
+                                <p class="text-light">Lux measures the amount of light falling on a surface. Proper illuminance levels are crucial for visual comfort and task performance.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recommendation Cards -->
+        <!-- <div class="row mt-5">
+            <div class="col-12">
+                <h3 class="text-warning mb-4">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    Age-Based Recommendations
+                </h3>
+                <div class="row g-4" id="recommendationCards">
+                    Recommendation cards will be dynamically generated here
+                </div>
+            </div>
+        </div> -->
+    </main>
+
+        <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <!-- External Simulator JavaScript -->
+    <script src="classroom-simulator.js"></script>
+
+    <script>
+        // Initialize the simulator when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSimulator();
+            // compareValues();
+        });
+    </script>
+</body>
+</html>

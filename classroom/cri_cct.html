@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image CRI & CCT Simulator</title>
+  <style>
+    /* Main page styling */
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+      background-color: #f2f2f2;
+    }
+    
+    /* Canvas styling for image display */
+    canvas {
+      max-width: 300px;
+      height: auto;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+    }
+    
+    /* Slider styling for controls */
+    input[type="range"] {
+      width: 300px;
+    }
+    
+    /* Control panel styling */
+    .controls {
+      margin-top: 20px;
+    }
+    
+    /* Container for organizing multiple canvases */
+    .canvas-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    
+    /* Individual canvas wrapper styling */
+    .canvas-wrapper {
+      text-align: center;
+    }
+    
+    /* Canvas title styling */
+    .canvas-wrapper h3 {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Main application title -->
+  <h1>CRI & CCT Image Simulator</h1>
+
+  <!-- File upload input for user images -->
+  <input type="file" id="imageInput" accept="image/*"><br>
+
+  <!-- Control panel for CCT and CRI adjustments -->
+  <div class="controls">
+    <!-- CCT (Correlated Color Temperature) control -->
+    <label>CCT (K): <span id="cctValue">6500</span></label><br>
+    <input type="range" id="cctSlider" min="1000" max="10000" value="6500" step="100"><br><br>
+
+    <!-- CRI (Color Rendering Index) control -->
+    <label>CRI: <span id="criValue">100</span></label><br>
+    <input type="range" id="criSlider" min="0" max="100" value="100" step="1">
+  </div>
+
+  <!-- Canvas container for displaying multiple images -->
+  <div class="canvas-container">
+    <!-- Apple image display -->
+    <div class="canvas-wrapper">
+      <h3>Apple (Original)</h3>
+      <canvas id="canvas"></canvas>
+    </div>
+    <!-- Banana image display -->
+    <div class="canvas-wrapper">
+      <h3>Banana (Original)</h3>
+      <canvas id="canvas2"></canvas>
+    </div>
+    <!-- Uploaded image display -->
+    <div class="canvas-wrapper">
+      <h3>Uploaded Image</h3>
+      <canvas id="canvasLoad"></canvas>
+    </div>
+  </div>
+
+  <script>
+    // Get DOM elements for manipulation
+    const imageInput = document.getElementById('imageInput');
+    const canvas = document.getElementById('canvas');
+    const canvas2 = document.getElementById('canvas2');
+    const canvasLoad = document.getElementById('canvasLoad');
+    const ctx = canvas.getContext('2d');
+    const ctx2 = canvas2.getContext('2d');
+    const ctxLoad = canvasLoad.getContext('2d');
+
+    // Get control elements
+    const cctSlider = document.getElementById('cctSlider');
+    const criSlider = document.getElementById('criSlider');
+    const cctValue = document.getElementById('cctValue');
+    const criValue = document.getElementById('criValue');
+
+    // Store original image data for each canvas
+    let originalImage = null;    // Apple image data
+    let originalImage2 = null;   // Banana image data
+    let originalImageLoad = null; // Uploaded image data
+
+    // Load and process apple image
+    const img = new Image();
+    img.onload = function() {
+      // Set canvas dimensions to match image
+      canvas.width = img.width;
+      canvas.height = img.height;
+      // Draw original image to canvas
+      ctx.drawImage(img, 0, 0);
+      // Store original pixel data for processing
+      originalImage = ctx.getImageData(0, 0, img.width, img.height);
+      // Apply initial filters
+      applyFilters();
+    };
+    img.onerror = function() {
+      console.error('Failed to load apple image');
+    };
+    img.src = "images/apple.webp";
+
+    // Load and process banana image
+    const img2 = new Image();
+    img2.onload = function() {
+      // Set canvas dimensions to match image
+      canvas2.width = img2.width;
+      canvas2.height = img2.height;
+      // Draw original image to canvas
+      ctx2.drawImage(img2, 0, 0);
+      // Store original pixel data for processing
+      originalImage2 = ctx2.getImageData(0, 0, img2.width, img2.height);
+      // Apply initial filters
+      applyFilters();
+    };
+    img2.onerror = function() {
+      console.error('Failed to load banana image');
+    };
+    img2.src = "images/Banana.jpg";
+
+    // Handle file upload from user
+    imageInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (!file) return; // Exit if no file selected
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const imgLoad = new Image();
+        imgLoad.onload = function() {
+          // Set canvas dimensions to match uploaded image
+          canvasLoad.width = imgLoad.width;
+          canvasLoad.height = imgLoad.height;
+          // Draw uploaded image to canvas
+          ctxLoad.drawImage(imgLoad, 0, 0);
+          // Store original pixel data for processing
+          originalImageLoad = ctxLoad.getImageData(0, 0, imgLoad.width, imgLoad.height);
+          // Apply filters to uploaded image
+          applyFilters();
+        };
+        imgLoad.onerror = function() {
+          console.error('Failed to load uploaded image');
+        };
+        imgLoad.src = event.target.result;
+      };
+      reader.onerror = function() {
+        console.error('Failed to read file');
+      };
+      // Convert file to data URL for image loading
+      reader.readAsDataURL(file);
+    });
+
+    /**
+     * Main function to apply CRI and CCT filters to all loaded images
+     * Called whenever slider values change
+     */
+    function applyFilters() {
+      // Get current slider values
+      const cct = parseInt(cctSlider.value);
+      const cri = parseInt(criSlider.value);
+
+      // Update display values
+      cctValue.textContent = cct;
+      criValue.textContent = cri;
+
+      // Process each image if it exists
+      if (originalImage) {
+        processImage(originalImage, ctx, cct, cri);
+      }
+
+      if (originalImage2) {
+        processImage(originalImage2, ctx2, cct, cri);
+      }
+
+      if (originalImageLoad) {
+        processImage(originalImageLoad, ctxLoad, cct, cri);
+      }
+    }
+
+    /**
+     * Process a single image with CRI and CCT effects
+     * @param {ImageData} originalImageData - Original image pixel data
+     * @param {CanvasRenderingContext2D} context - Canvas context to draw on
+     * @param {number} cct - Correlated Color Temperature in Kelvin
+     * @param {number} cri - Color Rendering Index (0-100)
+     */
+    function processImage(originalImageData, context, cct, cri) {
+      // Create a copy of original image data for processing
+      const imageData = new ImageData(new Uint8ClampedArray(originalImageData.data), originalImageData.width, originalImageData.height);
+      const data = imageData.data;
+
+      // Calculate CCT color temperature effects
+      // CCT simulation: warmer (lower K) = more red, cooler (higher K) = more blue
+      const kelvin = cct;
+      const tempFactor = (kelvin - 6500) / 3500; // Normalize around 6500K (daylight)
+      const redShift = -tempFactor * 40;   // Red channel adjustment
+      const blueShift = tempFactor * 40;   // Blue channel adjustment
+
+      // Process each pixel in the image
+      for (let i = 0; i < data.length; i += 4) {
+        let r = data[i];     // Red channel
+        let g = data[i + 1]; // Green channel
+        let b = data[i + 2]; // Blue channel
+        // data[i + 3] is alpha channel (transparency) - we don't modify it
+
+        // Apply CCT white balance adjustment
+        r = clamp(r + redShift);
+        b = clamp(b + blueShift);
+
+        // Calculate CRI effects
+        const criFactor = cri / 100; // Normalize CRI to 0-1
+        const avg = (r + g + b) / 3; // Calculate average brightness
+
+        // CRI simulation: lower CRI reduces color accuracy
+        // Shift colors toward grayscale if CRI is low
+        if (cri < 95) {
+          r = lerp(r, avg, 1 - criFactor);
+          g = lerp(g, avg, 1 - criFactor);
+          b = lerp(b, avg, 1 - criFactor);
+        }
+
+        // Desaturate colors based on CRI
+        // Lower CRI = more desaturated (grayer) colors
+        r = lerp(r, avg, 0.5 * (1 - criFactor));
+        g = lerp(g, avg, 0.5 * (1 - criFactor));
+        b = lerp(b, avg, 0.5 * (1 - criFactor));
+
+        // Store processed pixel values back to image data
+        data[i] = clamp(r);
+        data[i + 1] = clamp(g);
+        data[i + 2] = clamp(b);
+      }
+
+      // Draw processed image data back to canvas
+      context.putImageData(imageData, 0, 0);
+    }
+
+    /**
+     * Linear interpolation function
+     * @param {number} a - Start value
+     * @param {number} b - End value
+     * @param {number} t - Interpolation factor (0-1)
+     * @returns {number} Interpolated value
+     */
+    function lerp(a, b, t) {
+      return a + (b - a) * t;
+    }
+
+    /**
+     * Clamp value to valid range (0-255 for pixel values)
+     * @param {number} value - Value to clamp
+     * @returns {number} Clamped value between 0 and 255
+     */
+    function clamp(value) {
+      return Math.max(0, Math.min(255, Math.round(value)));
+    }
+
+    // Add event listeners for real-time filter updates
+    cctSlider.addEventListener('input', applyFilters);
+    criSlider.addEventListener('input', applyFilters);
+  </script>
+</body>
+</html>

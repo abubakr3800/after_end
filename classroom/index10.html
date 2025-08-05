@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lighting Quality Simulator</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      padding: 2rem;
+      background-color: #121212;
+      color: #f1f1f1;
+    }
+    .card {
+      transition: all 0.4s ease-in-out;
+    }
+    .classroom-img {
+      max-width: 200px;
+      width: 100%;
+      transition: opacity 0.8s ease, filter 0.5s;
+    }
+    .blurred {
+      filter: blur(5px);
+      opacity: 0.4;
+    }
+    .hidden {
+      display: none !important;
+    }
+    .feedback-card p {
+      margin-bottom: 0.5rem;
+    }
+    .feedback-card b {
+      display: block;
+      margin-top: 0.5rem;
+      color: #ffc107;
+    }
+    #simulatedEffect {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 2px solid #444;
+      margin-top: 2rem;
+    }
+
+    .flicker {
+      animation: flickerAnim 0.2s infinite;
+    }
+    @keyframes flickerAnim {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="mb-4">Lighting Quality Simulator</h1>
+
+    <!-- Controls -->
+    <div class="card p-4 mb-4 bg-dark text-white">
+      <div class="row g-4">
+        <div class="col-6">
+          <div class="col-12">
+            <label for="cri" class="form-label">CRI (Color Rendering Index): <span id="criVal">80</span></label>
+            <input type="range" class="form-range" id="cri" min="0" max="100" value="80">
+            <label for="cct" class="form-label">CCT (Color Temperature): <span id="cctVal">4000</span>K</label>
+            <input type="range" class="form-range" id="cct" min="1000" max="10000" step="100" value="4000">
+            <label for="flicker" class="form-label">Flicker (% Modulation): <span id="flickerVal">0</span>%</label>
+            <input type="range" class="form-range" id="flicker" min="0" max="100" value="0">
+            <label for="glare" class="form-label">Glare Level: <span id="glareVal">0</span></label>
+            <input type="range" class="form-range" id="glare" min="0" max="100" value="0">
+          </div>
+          <!-- Canvas Simulation -->
+          <div class="col-4">
+            <canvas id="simulatedEffect"></canvas>
+          </div>
+        </div>
+
+        <div class="col-6">
+          <div class="col-12 d-flex justify-content-center gap-3 flex-wrap" id="classroomScene">
+            <img src="images/kindergarten.jpg" id="kindergarten" class="classroom-img" alt="Kindergarten">
+            <img src="images/primary.jpg" id="primary" class="classroom-img" alt="Primary">
+            <img src="images/secondary.jpg" id="secondary" class="classroom-img" alt="Secondary">
+            <img src="images/college.jpg" id="college" class="classroom-img" alt="college">
+            <img src="images/tunable/s.png" id="sad1" class="classroom-img hidden" alt="Sad 1">
+            <img src="images/tunable/t.png" id="sad2" class="classroom-img hidden" alt="Sad 2">
+          </div>
+          <div class="text-center mt-4">
+            <div id="warningText" class="text-danger fw-bold" style="display:none; font-size: 1.2rem;">
+              ⚠️ Lighting conditions are unsuitable for learning. Please adjust Glare or Flicker levels.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Feedback Cards -->
+
+    <!-- Feedback Cards -->
+    <div class="row g-4 mt-4" id="cardsContainer">
+      <div class="col-md-6">
+        <div class="card bg-dark text-light p-3 feedback-card">
+          <h5>CRI Feedback</h5>
+          <p id="criFeedbackVal">Value: 80</p>
+          <p id="criEffect">Effect: Improves color accuracy and reduces eye strain.</p>
+          <p id="criCause">Cause: Higher CRI means better spectral match to sunlight.</p>
+          <p id="criScenario">Scenario: Students can distinguish colors in art or biology experiments clearly.</p>
+          <b id="criScope">Scope: All students; especially important for art and science subjects.</b>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card bg-dark text-light p-3 feedback-card">
+          <h5>CCT Feedback</h5>
+          <p id="cctFeedbackVal">Value: 4000K</p>
+          <p id="cctEffect">Effect: Balances alertness and comfort for focused tasks.</p>
+          <p id="cctCause">Cause: Mid-CCT provides a neutral-white tone aiding circadian rhythm balance.</p>
+          <p id="cctScenario">Scenario: Students remain alert and comfortable during full-day classes.</p>
+          <b id="cctScope">Scope: Ideal for primary to secondary students; enhances reading, math, and discussion.</b>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card bg-dark text-light p-3 feedback-card">
+          <h5>Flicker Feedback</h5>
+          <p id="flickerFeedbackVal">Value: 0%</p>
+          <p id="flickerEffect">Effect: No visible flicker ensures visual comfort and reduces fatigue.</p>
+          <p id="flickerCause">Cause: Stable current supply without high-frequency modulation.</p>
+          <p id="flickerScenario">Scenario: Students maintain focus longer without headaches.</p>
+          <b id="flickerScope">Scope: All students; especially neurodiverse and sensitive individuals.</b>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card bg-dark text-light p-3 feedback-card">
+          <h5>Glare Feedback</h5>
+          <p id="glareFeedbackVal">Value: 0</p>
+          <p id="glareEffect">Effect: No discomfort or visibility issues.</p>
+          <p id="glareCause">Cause: Light sources are diffused and properly shielded.</p>
+          <p id="glareScenario">Scenario: Students can look at boards or screens without squinting or stress.</p>
+          <b id="glareScope">Scope: Essential for all age groups; especially critical in rooms with screens or whiteboards.</b>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- JavaScript -->
+    <script>
+      const canvas = document.getElementById('simulatedEffect');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      let originalImage = null;
+
+      img.onload = function () {
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        originalImage = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        applyFilters();
+      };
+      img.src = 'images/sample.jpg'; // حط صورتك هنا
+
+      function applyVisualEffect(imageData, cct, cri, flicker) {
+        const data = new Uint8ClampedArray(imageData.data);
+        const result = new ImageData(data, imageData.width, imageData.height);
+
+        const kelvinFactor = (cct - 6500) / 3500;
+        const redShift = -kelvinFactor * 40;
+        const blueShift = kelvinFactor * 40;
+        const criFactor = cri / 100;
+        const flickerFactor = flicker / 100;
+
+        for (let i = 0; i < data.length; i += 4) {
+          let r = result.data[i];
+          let g = result.data[i + 1];
+          let b = result.data[i + 2];
+
+          r = r + redShift;
+          b = b + blueShift;
+
+          const avg = (r + g + b) / 3;
+
+          if (cri < 95) {
+            r = r * criFactor + avg * (1 - criFactor);
+            g = g * criFactor + avg * (1 - criFactor);
+            b = b * criFactor + avg * (1 - criFactor);
+          }
+
+          // flicker تأثير: شفافية
+          const alpha = 255 * (1 - 0.3 * flickerFactor);
+
+          result.data[i] = clamp(r);
+          result.data[i + 1] = clamp(g);
+          result.data[i + 2] = clamp(b);
+          result.data[i + 3] = clamp(alpha);
+        }
+        return result;
+      }
+
+      function clamp(v) {
+        return Math.max(0, Math.min(255, Math.round(v)));
+      }
+
+      function updateVisualCanvas(cct, cri, flicker) {
+        if (!originalImage) return;
+        const filtered = applyVisualEffect(originalImage, cct, cri, flicker);
+        ctx.putImageData(filtered, 0, 0);
+      }
+
+      const sliders = ['cri', 'cct', 'flicker', 'glare'];
+      sliders.forEach(id => {
+        document.getElementById(id).addEventListener('input', () => {
+          const cri = parseInt(document.getElementById('cri').value);
+          const cct = parseInt(document.getElementById('cct').value);
+          const flicker = parseInt(document.getElementById('flicker').value);
+          const glare = parseInt(document.getElementById('glare').value);
+          updateVisualCanvas(cct, cri, flicker);
+        });
+      });
+
+      
+    const classroomImages = {
+      kindergarten: document.getElementById('kindergarten'),
+      primary: document.getElementById('primary'),
+      secondary: document.getElementById('secondary'),
+      college: document.getElementById('college'),
+      sad1: document.getElementById('sad1'),
+      sad2: document.getElementById('sad2')
+    };
+
+    const criSlider = document.getElementById('cri');
+    const cctSlider = document.getElementById('cct');
+    const flickerSlider = document.getElementById('flicker');
+    const glareSlider = document.getElementById('glare');
+    const criVal = document.getElementById('criVal');
+    const cctVal = document.getElementById('cctVal');
+    const flickerVal = document.getElementById('flickerVal');
+    const glareVal = document.getElementById('glareVal');
+
+    function updateClassroomImages(cct, flicker, glare) {
+      const warningText = document.getElementById('warningText');
+      const blurAll = flicker > 8 || glare > 19;
+
+      Object.values(classroomImages).forEach(img => {
+        img.classList.add('hidden');
+        img.classList.remove('blurred');
+      });
+
+      if (blurAll) {
+        warningText.style.display = 'block';
+        if (glare > 19 && glare <= 66) { classroomImages.sad1.classList.remove('hidden'); }
+        else if (glare > 66) { classroomImages.sad2.classList.remove('hidden'); }
+        return;
+      }
+
+      if (flicker > 8) {
+        canvas.classList.add('flicker'); 
+      } else {
+        canvas.classList.remove('flicker'); 
+      }
+
+      warningText.style.display = 'none';
+
+      let selected = '';
+      if (cct >= 2700 && cct < 3500) selected = 'kindergarten';
+      else if (cct >= 3500 && cct < 5000) selected = 'primary';
+      else if (cct >= 5000 && cct <= 7000) selected = 'secondary';
+      else if (cct > 7000) selected = 'college';
+
+      Object.entries(classroomImages).forEach(([key, img]) => {
+        if (['kindergarten', 'primary', 'secondary', 'college'].includes(key)) {
+          img.classList.remove('hidden');
+          img.classList.toggle('blurred', key !== selected);
+        }
+      });
+    }
+      
+    function applyFilters() {
+      const cri = parseInt(criSlider.value);
+      const cct = parseInt(cctSlider.value);
+      const flicker = parseInt(flickerSlider.value);
+      const glare = parseInt(glareSlider.value);
+
+      criVal.textContent = cri;
+      cctVal.textContent = cct;
+      flickerVal.textContent = flicker;
+      glareVal.textContent = glare;
+
+          // CRI Card Text
+            document.getElementById('criFeedbackVal').textContent = `Current CRI: ${cri}`;
+            document.getElementById('criEffect').textContent = cri >= 80 ? "Enhances color accuracy and reduces eye strain." : "May distort color perception and reduce learning clarity.";
+            document.getElementById('criCause').textContent = "CRI indicates how accurately colors are rendered under a light source.";
+            document.getElementById('criScenario').textContent = cri >= 80 ? "Students see real-life colors in science and art materials." : "Students may confuse colors in biology diagrams or artwork.";
+            document.getElementById('criScope').textContent = cri >= 90 ? "Ideal for Art, Biology, Chemistry students." : "Usable for general subjects, but avoid for color-sensitive tasks.";
+
+            // CCT Card Text
+            document.getElementById('cctFeedbackVal').textContent = `Current CCT: ${cct}K`;
+            document.getElementById('cctEffect').textContent = cct < 3500 ? "Warm light - induces calmness, but may reduce alertness." : cct > 6000 ? "Cool light - increases alertness, but may cause stress." : "Balanced light suitable for most educational tasks.";
+            document.getElementById('cctCause').textContent = "CCT alters the color tone (warm/cool) and affects brain activity.";
+            document.getElementById('cctScenario').textContent = cct < 3500 ? "Students feel relaxed but less focused." : cct > 6000 ? "Students feel energetic but may get visual fatigue." : "Students stay comfortable and attentive.";
+            document.getElementById('cctScope').textContent = cct < 3500 ? "Better for music/art and relaxation zones." : cct > 6000 ? "Better for exams or short focus sessions." : "Good for all students in normal classrooms.";
+
+            // Flicker Card Text
+            document.getElementById('flickerFeedbackVal').textContent = `Flicker: ${flicker}%`;
+            document.getElementById('flickerEffect').textContent = flicker > 30 ? "High flicker can cause headaches and eye fatigue." : "No major flicker risk.";
+            document.getElementById('flickerCause').textContent = "Flicker is rapid brightness fluctuation due to power modulation.";
+            document.getElementById('flickerScenario').textContent = flicker > 30 ? "Students complain of discomfort or can't focus." : "Students stay visually comfortable.";
+            document.getElementById('flickerScope').textContent = flicker > 30 ? "Avoid for young children and students with visual sensitivity." : "Acceptable for most students.";
+
+            // Glare Card Text
+            document.getElementById('glareFeedbackVal').textContent = `Glare Level: ${glare}`;
+            document.getElementById('glareEffect').textContent = glare > 60 ? "High glare reduces screen and board visibility." : "Low glare supports visual clarity.";
+            document.getElementById('glareCause').textContent = "Glare is caused by overly bright light in contrast with surroundings.";
+            document.getElementById('glareScenario').textContent = glare > 60 ? "Students squint, struggle to read or see the whiteboard." : "Students view clearly without strain.";
+            document.getElementById('glareScope').textContent = glare > 60 ? "Avoid for computer labs and reading zones." : "Safe for classrooms and study halls.";
+
+    
+            criVal.textContent = cri;
+            cctVal.textContent = cct;
+            flickerVal.textContent = flicker;
+            glareVal.textContent = glare;
+
+      updateClassroomImages(cct, flicker, glare);
+    }
+
+    [criSlider, cctSlider, flickerSlider, glareSlider].forEach(input => {
+      input.addEventListener('input', applyFilters);
+    });
+    </script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,262 @@
+/* ==================================== */
+/* 1. CSS Custom Properties (Variables) */
+/* ==================================== */
+
+:root {
+    /* Font Families */
+    --fm-p: "IBM Plex Sans Arabic", sans-serif;
+    --fm-h1: "Anton", sans-serif;
+
+    /* Font Weights */
+    --fw-100: 100;
+    --fw-200: 200;
+    --fw-300: 300;
+    --fw-400: 400;
+    --fw-500: 500;
+    --fw-600: 600;
+    --fw-700: 700;
+    --fw-800: 800;
+    --fw-900: 900;
+
+    /* Colors (HSL format) */
+    --clr-accent: hsl(357, 84%, 51%);
+    --clr-neutral-100: 0, 0%, 100%;
+    --clr-neutral-200: 0, 0%, 90%;
+    --clr-neutral-300: 0, 0%, 80%;
+    --clr-neutral-400: 0, 0%, 64%;
+    --clr-neutral-700: 0, 0%, 35%;
+    --clr-neutral-800: 0, 0%, 23%;
+    --clr-neutral-900: 0, 0%, 0%;
+
+    /* Spacing & Sizes */
+    --fs: 1em;
+    --gap: 1rem;
+    --width: 80%;
+    --input-width: calc(25% - calc(var(--gap) * 1.5));
+
+    /* Layout & Other */
+    --flex-dir: row;
+}
+
+/* ==================================== */
+/* 2. Base Styles & Global Resets       */
+/* ==================================== */
+
+/* Box Sizing & Resets */
+*, h1, h2, h3, h4, p, a, li, span {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Focus State for accessibility */
+*:focus {
+    outline: none;
+    border: solid 1px var(--clr-accent);
+}
+
+/* Body and Global Typography */
+body {
+    background-color: hsl(var(--clr-neutral-800));
+    font-family: var(--fm-p);
+    font-size: var(--fs);
+    overflow-x: hidden;
+}
+
+/* Custom Typography Classes */
+.display-3 {
+    font-family: var(--fm-h1);
+    text-transform: uppercase;
+}
+
+.text-danger {
+    color: var(--clr-accent) !important;
+}
+
+/* Custom Button Styles */
+.btn-danger {
+    background-color: var(--clr-accent);
+    border-color: var(--clr-accent);
+    transition: all 350ms ease-out;
+}
+
+.btn-danger:hover {
+    background-color: var(--clr-accent);
+    border-color: var(--clr-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.btn-outline-danger {
+    color: var(--clr-accent);
+    border-color: var(--clr-accent);
+    transition: all 350ms ease-out;
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--clr-accent);
+    border-color: var(--clr-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom Form Styles */
+.form-select.bg-dark {
+    background-color: hsl(var(--clr-neutral-800)) !important;
+    color: hsl(var(--clr-neutral-100)) !important;
+    border-color: hsl(var(--clr-neutral-400)) !important;
+}
+
+.form-select.bg-dark:focus {
+    border-color: var(--clr-accent) !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+}
+
+/* Custom Card Styles */
+.card.bg-secondary.bg-opacity-25 {
+    background-color: hsl(var(--clr-neutral-700), 0.25) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+/* Custom Navbar Styles */
+.navbar-dark .navbar-nav .nav-link {
+    color: hsl(var(--clr-neutral-100));
+    transition: all 350ms ease-in-out;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover {
+    color: var(--clr-accent);
+    border-bottom: 2px solid var(--clr-accent);
+}
+
+.navbar-dark .navbar-nav .btn-link {
+    color: hsl(var(--clr-neutral-100));
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0.125rem;
+    transition: all 350ms ease-in-out;
+}
+
+.navbar-dark .navbar-nav .btn-link:hover {
+    color: var(--clr-accent);
+    border-bottom: 2px solid var(--clr-accent);
+}
+
+/* Custom Image Styles for Social Media */
+.navbar-nav .nav-link img {
+    transition: all 250ms ease-in;
+}
+
+.navbar-nav .nav-link:hover img {
+    filter: sepia(0%);
+    background-color: hsl(var(--clr-neutral-100));
+    border-radius: 4px;
+    padding: 2px;
+}
+
+/* Custom Alert Styles */
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.1);
+    border-color: var(--clr-accent);
+    color: hsl(var(--clr-neutral-100));
+}
+
+/* Custom List Styles for Results */
+.list-unstyled li {
+    transition: all 250ms ease-in-out;
+}
+
+.list-unstyled li:hover {
+    background-color: hsl(var(--clr-neutral-700), 0.5) !important;
+    transform: translateX(5px);
+}
+
+/* ==================================== */
+/* 3. Responsive Adjustments            */
+/* ==================================== */
+
+@media (max-width: 768px) {
+    :root {
+        --fs: 0.9em;
+        --gap: 0.8rem;
+    }
+    
+    .display-3 {
+        font-size: 2.5rem !important;
+    }
+    
+    .card-body {
+        padding: 1.5rem !important;
+    }
+    
+    .btn-lg {
+        padding: 0.75rem 2rem !important;
+        font-size: 1rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .display-3 {
+        font-size: 2rem !important;
+    }
+    
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    
+    .position-fixed {
+        display: none;
+    }
+}
+
+/* ==================================== */
+/* 4. Animation and Effects             */
+/* ==================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* ==================================== */
+/* 5. Utility Classes                   */
+/* ==================================== */
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.rounded-4 {
+    border-radius: 1rem !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: hsl(var(--clr-neutral-800));
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--clr-accent);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: hsl(357, 84%, 45%);
+}

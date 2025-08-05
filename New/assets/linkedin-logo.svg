@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="176.38889mm"
+   height="175.74295mm"
+   viewBox="0 0 176.38889 175.74295"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20ef0f, 2023-11-25, custom)"
+   sodipodi:docname="linkedin-logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     inkscape:zoom="4.1625654"
+     inkscape:cx="619.08937"
+     inkscape:cy="274.10981"
+     inkscape:window-width="1920"
+     inkscape:window-height="1048"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(334.80045,-60.325)">
+    <path
+       style="fill:#2867b2;fill-opacity:1;stroke-width:0.264583"
+       d="M -326.4995,216.91174 V 79.481224 c 0,-7.168889 5.65591,-11.859193 11.85107,-11.859193 h 136.08478 c 5.81879,0 11.85109,4.672457 11.85109,11.867499 v 137.42221 c 0,4.98967 -3.39874,11.85919 -11.85919,11.85919 h -136.06854 c -8.31347,0 -11.85921,-7.04703 -11.85921,-11.85919 z m 47.42738,-89.59403 h -23.93811 v 76.60199 h 23.93811 z m 38.67977,54.38443 c 0.12369,-24.69802 0.0972,-24.34917 2.16352,-28.54865 2.31204,-4.93141 6.79747,-6.51673 11.82734,-6.53567 6.81943,-0.50295 10.52049,4.31041 11.83346,10.62255 0.70444,15.53117 0.42075,31.12595 0.4281,46.67933 h 23.97362 l -0.1198,-26.25712 c -0.11557,-25.38072 -0.14137,-26.37047 -0.76537,-29.65271 -1.41544,-7.44389 -3.41814,-11.77098 -7.22958,-15.62041 -4.21579,-4.25782 -9.0264,-6.22018 -16.89549,-6.89203 -9.08854,-0.77595 -18.91735,0.93762 -26.19311,12.41039 v -10.59011 h -23.04042 v 76.60199 h 23.90639 z m -46.48686,-65.42426 c 9.90804,-2.92335 12.89937,-15.58209 5.56098,-22.92044 -2.76312,-2.763156 -5.81438,-4.026871 -9.72292,-4.026871 -7.80244,0 -13.76443,5.943736 -13.76443,13.722161 0,6.16101 3.80636,11.19753 9.50401,13.21098 1.58756,0.56105 6.61637,0.54703 8.42236,0.014 z"
+       id="path1-3"
+       sodipodi:nodetypes="cccccccsccccccssssccsssscccccssssssss" />
+  </g>
+</svg>

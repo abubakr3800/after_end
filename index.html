@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lighting Quality Simulator</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="text/javascript">
+    //   document.oncontextmenu = new Function("return false;");
+    //   document.onselectstart = new Function("return false;");
+    </script>
+  </head>
+  <body class="bg-dark text-light">
+    <!-- Credits Section -->
+    <div class="position-fixed top-50 end-0 translate-middle-y bg-light text-dark p-3 rounded-start shadow" style="z-index: 1050;">
+      <div class="text-center mb-2">
+        <p class="mb-0 small fw-bold">Powered by</p>
+      </div>
+      <a href="https://shortcircuitcompany.com" target="_blank">
+        <img src="assets/SClogo.svg" alt="this application is powered by Short Circuit Company" class="img-fluid" style="max-width: 60px;">
+      </a>
+    </div>
+
+    <!-- Header -->
+    <header class="border-bottom border-light">
+      <div class="container-fluid">
+        <div class="row align-items-center py-3">
+          <div class="col-md-6">
+            <a href="index.html">
+              <img src="assets/logo-Light.svg" alt="Logo" class="img-fluid" style="max-height: 40px;">
+            </a>
+          </div>
+          <div class="col-md-6">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+              <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                  <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                      <a class="nav-link" href="about.html">About SChools</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" href="Documentation.html">Documentation</a>
+                    </li>
+                    <li class="nav-item">
+                      <button class="btn btn-link nav-link" popovertarget="contactus">
+                        Contact us
+                      </button>
+                    </li>
+                    <li class="nav-item">
+                      <a href="https://facebook.com/shortcircuiteg" target="_blank" class="nav-link">
+                        <img src="assets/facebook-logo.svg" alt="facebook" class="img-fluid" style="width: 20px; filter: brightness(0) invert(1);">
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="https://instagram.com/shortcircuiteg" target="_blank" class="nav-link">
+                        <img src="assets/instagram-logo.svg" alt="instagram" class="img-fluid" style="width: 20px; filter: brightness(0) invert(1);">
+                      </a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="https://www.linkedin.com/company/short-circuit-company" target="_blank" class="nav-link">
+                        <img src="assets/linkedin-logo.svg" alt="linkedin" class="img-fluid" style="width: 20px; filter: brightness(0) invert(1);">
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container-fluid min-vh-100 d-flex flex-column">
+      <!-- Hero Section -->
+      <div class="row flex-grow-1 align-items-center justify-content-center py-5">
+        <div class="col-12 text-center">
+          <h1 class="display-3 fw-bold text-danger mb-4">toward a brighter education</h1>
+        </div>
+      </div>
+
+      <!-- Form Section -->
+      <div class="row justify-content-center pb-5">
+        <div class="col-lg-8 col-md-10 col-12">
+          <div class="card bg-secondary bg-opacity-25 text-white border-0 rounded-4 p-4">
+            <div class="card-body">
+              <h2 class="text-center text-danger mb-4">Lighting Quality Simulator</h2>
+              
+              <form class="row g-3">
+                <div class="col-md-6">
+                  <label for="grade" class="form-label">Select Grade:</label>
+                  <select id="grade" class="form-select bg-dark text-light border-secondary">
+                    <option value="">-- Choose --</option>
+                    <option value="kinder">Kindergarten</option>
+                    <option value="primary">Primary</option>
+                    <option value="adults">Secondary</option>
+                  </select>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="environment" class="form-label">Select Environment:</label>
+                  <select id="environment" class="form-select bg-dark text-light border-secondary">
+                    <option value="">-- Choose --</option>
+                    <option value="classroom">Classroom</option>
+                    <option value="playground">Playground</option>
+                    <option value="laboratory">Laboratory</option>
+                  </select>
+                </div>
+
+                <!-- <div class="col-12 text-center">
+                  <button type="button" class="btn btn-danger btn-lg px-5" onclick="simulateLighting()">
+                    Simulate
+                  </button>
+                </div> -->
+              </form>
+
+              <!-- Results Section -->
+              <div id="results" class="mt-4 text-white"></div>
+
+              <!-- Additional Simulate Button -->
+              <div class="text-center mt-3">
+                <button type="button" class="btn btn-outline-danger btn-lg px-5" onclick="goToClassroom()">
+                  Go to Classroom Simulator
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script>
+      async function simulateLighting() {
+        const grade = document.getElementById("grade").value;
+        const environment = document.getElementById("environment").value;
+        const resultDiv = document.getElementById("results");
+        resultDiv.innerHTML = "";
+
+        if (!grade || !environment) {
+          alert("Please select both grade and environment.");
+          return;
+        }
+
+        try {
+          const response = await fetch("api/data.json");
+          const lightingData = await response.json();
+          const data = lightingData[grade];
+
+          let resultsHTML = `
+            <div class="card bg-dark border-secondary mt-4">
+              <div class="card-body">
+                <h3 class="text-danger mb-3">Age Range: ${data.age_range}</h3>
+                <h4 class="text-warning mb-3">Environment: ${environment}</h4>
+          `;
+
+          for (let param in data) {
+            if (param === "age_range") continue;
+            resultsHTML += `<h5 class="text-info mt-4 mb-2">${param}</h5><ul class="list-unstyled">`;
+            data[param].forEach((entry) => {
+              resultsHTML += `
+                <li class="mb-3 p-3 bg-secondary bg-opacity-25 rounded text-white">
+                  <strong class="text-warning">Range:</strong> ${entry.range.min}–${entry.range.max} ${entry.range.unit}<br>
+                  <strong class="text-success">Rating:</strong> ${entry.rating}<br>
+                  <strong class="text-info">Reason:</strong> ${entry.reason}<br>
+                  <strong class="text-primary">Recommendation:</strong> ${entry.recommendation}
+                </li>
+              `;
+            });
+            resultsHTML += `</ul>`;
+          }
+
+          resultsHTML += `</div></div>`;
+          resultDiv.innerHTML = resultsHTML;
+        } catch (err) {
+          console.error("Failed to load lighting data:", err);
+          resultDiv.innerHTML = `
+            <div class="alert alert-danger mt-4" role="alert">
+              Failed to load lighting data. Please try again later.
+            </div>
+          `;
+        }
+      }
+
+      function goToClassroom() {
+        const grade = document.getElementById("grade").value;
+        const environment = document.getElementById("environment").value;
+
+        if (!grade || !environment) {
+          alert("Please select both grade and environment before proceeding to the classroom simulator.");
+          return;
+        }
+
+        // Store the selected data in cookies
+        const selectedData = {
+          grade: grade,
+          environment: environment,
+          timestamp: new Date().toISOString()
+        };
+
+        // Set cookies with the selected data
+        document.cookie = `selectedGrade=${grade}; path=/; max-age=3600`; // 1 hour expiry
+        document.cookie = `selectedEnvironment=${environment}; path=/; max-age=3600`;
+        document.cookie = `selectedData=${JSON.stringify(selectedData)}; path=/; max-age=3600`;
+
+        // Redirect to classroom.html
+        window.location.href = "class.html";
+      }
+    </script>
+  </body>
+</html>

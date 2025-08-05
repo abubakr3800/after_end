@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SChools - Classroom Simulator</title>
+    
+    <link rel="icon" type="image/x-icon" href="assets/favicon.svg">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        /* Enhanced visual effects for classroom simulator */
+        .classroom-container {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        #lightingCanvas {
+            transition: filter 0.3s ease;
+            border-radius: 15px;
+        }
+        
+        .contols-card {
+            backdrop-filter: blur(15px) !important;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+        
+        .contols-card h3 {
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .controller-group {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .form-label {
+            color: #fff !important;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .label-value {
+            color: #ffd700 !important;
+            font-weight: bold;
+        }
+        
+        .range-text {
+            color: #ccc !important;
+            font-size: 0.9em;
+        }
+        
+        /* Flicker animation for canvas */
+        .flicker {
+            animation: flickerEffect 0.2s infinite;
+        }
+        
+        @keyframes flickerEffect {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+        
+        /* Blur effect for extreme conditions */
+        .blurred {
+            filter: blur(2px);
+        }
+        
+        /* Form action buttons */
+        .form-action-buttons {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* Validation status styling */
+        .validation-status {
+            font-size: 0.85rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-top: 4px;
+            font-weight: 500;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .validation-status.good {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
+        }
+        
+        .validation-status.medium {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+        }
+        
+        .validation-status.bad {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+        }
+        
+        .validation-status.evaluating {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        
+        /* Preloader Styles */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .preloader-content {
+            text-align: center;
+            color: white;
+        }
+        
+        .preloader-gif {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+        }
+        
+        .preloader-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #ffffff;
+            margin-top: 15px;
+            animation: pulse 1.5s infinite;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="text/javascript">
+        // document.oncontextmenu = new Function("return false;");
+        // document.onselectstart = new Function("return false;");
+    </script>
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader" class="preloader">
+        <div class="preloader-content">
+            <img src="assets/SCloading.gif" alt="Loading..." class="preloader-gif">
+            <div class="preloader-text">Loading Lighting Simulator...</div>
+        </div>
+    </div>
+    <div class="credits">
+        <div class="credits-text">
+            <p class="powered-by-text">Powered by</p>
+        </div>
+        <a href="https://shortcircuitcompany.com" target="_blank">
+            <img src="assets/SClogo.svg" alt="this application is powered by Short Circuit Company" class="sc-logo">
+        </a>
+    </div>
+
+    <header class="main-header">
+        <div class="header-container">
+          <div>
+            <a href="index.html">
+              <img src="assets/logo-Light.svg" alt="Logo" class="site-logo">
+            </a>
+          </div>
+          <div>
+            <nav class="main-nav">
+              <input type="checkbox" id="nav-toggle" class="nav-toggle">
+              <label for="nav-toggle" class="nav-toggle-label">
+                <span class="nav-toggle-icon"></span>
+              </label>
+              <ul class="nav-menu">
+                <li class="nav-item">
+                  <a class="nav-link" href="about.html">About SChools</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="Documentation.html">Documentation</a>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link nav-link-btn" popovertarget="contactus">
+                    Contact us
+                  </button>
+                </li>
+                <li class="nav-item">
+                  <a href="https://facebook.com/shortcircuiteg" target="_blank" class="nav-link">
+                    <img src="assets/facebook-logo.svg" alt="facebook" class="social-icon">
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://instagram.com/shortcircuiteg" target="_blank" class="nav-link">
+                    <img src="assets/instagram-logo.svg" alt="instagram" class="social-icon">
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="https://www.linkedin.com/company/short-circuit-company" target="_blank" class="nav-link">
+                    <img src="assets/linkedin-logo.svg" alt="linkedin" class="social-icon">
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+    </header>
+
+    <div class="overlay"></div>
+
+    <main class="main-content">
+            <div class="form-card-body">
+                <h4>Selected Parameters</h4>
+                <div id="selectedDataDisplay"></div>
+            </div>
+
+            <!-- Background Image Container with Controls Overlay -->
+            <div class="classroom-container" style="position: relative; min-height: 500px;">
+                <!-- Background Image -->
+                <div id="appendImage" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;">
+                    <canvas id="lightingCanvas" style="width: 100%; height: 100%; object-fit: cover;"></canvas>
+                    <img id="classroomImage" src="assets/school.png" alt="Classroom Background" style="display: none;">
+                    <div id="imageCounter" style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.7); color: white; padding: 5px 10px; border-radius: 5px; z-index: 3;">1 / 1</div>
+                </div>
+                
+                <!-- Controls Overlay -->
+                <div class="contols-card" style="position: relative; z-index: 2; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); margin: 20px; border-radius: 15px;">
+                    <h3>Lighting Controls</h3>
+                    
+                    <div class="controls-grid">
+                        <div class="controller-group">
+                            <label for="cctSlider" class="form-label">
+                                CCT (K):<span class="label-value" id="cctValue">6500</span>
+                                <span class="range-text" id="cctRange">Range: Loading...</span>
+                            </label>
+                            <input type="range" id="cctSlider" class="form-range" min="1000" max="10000" value="6500" step="100">
+                            <div class="validation-status" id="cctStatus">Evaluating...</div>
+                        </div>
+                        
+                        <div class="controller-group">
+                                <label for="criSlider" class="form-label">
+                                    CRI: <span class="label-value" id="criValue">80</span>
+                                    <span class="range-text" id="criRange">Range: Loading...</span>
+                                </label>
+                                <input type="range" id="criSlider" class="form-range" min="0" max="100" value="80" step="1">
+                                <div class="validation-status" id="criStatus">Evaluating...</div>
+                        </div>
+                        
+                        <div class="controller-group">
+                                <label for="flickerSlider" class="form-label">
+                                    Flicker (Hz): <span class="label-value" id="flickerValue">90</span>
+                                    <span class="range-text" id="flickerRange">Range: Loading...</span>
+                                </label>
+                                <input type="range" id="flickerSlider" class="form-range" min="0" max="100" value="1" step=".5">
+                                <div class="validation-status" id="flickerStatus">Evaluating...</div>
+                        </div>
+                        
+                        <div class="controller-group">
+                                <label for="glareSlider" class="form-label">
+                                    Glare (UGR): <span class="label-value" id="glareValue">6</span>
+                                    <span class="range-text" id="glareRange">Range: Loading...</span>
+                                </label>
+                                <input type="range" id="glareSlider" class="form-range" min="1" max="28" value="6" step="1">
+                                <div class="validation-status" id="glareStatus">Evaluating...</div>
+                        </div>
+                        
+                        <div class="controller-group" style="display: none;">
+                                <label for="melanopicSlider" class="form-label">
+                                    Melanopic EDI: <span class="label-value" id="melanopicValue">200</span>
+                                    <span class="range-text" id="melanopicRange">Range: Loading...</span>
+                                </label>
+                                <input type="range" id="melanopicSlider" class="form-range" min="0" max="500" value="200" step="10">
+                                <div class="validation-status" id="melanopicStatus">Evaluating...</div>
+                        </div>
+                        
+                        <div class="controller-group">
+                                <label for="verticalSlider" class="form-label">
+                                    Vertical Illuminance (lux): <span class="label-value" id="verticalValue">300</span>
+                                    <span class="range-text" id="verticalRange">Range: Loading...</span>
+                                </label>
+                                <input type="range" id="verticalSlider" class="form-range" min="0" max="1000" value="300" step="10">
+                                <div class="validation-status" id="verticalStatus">Evaluating...</div>
+                        </div>
+                        
+                        <div class="controller-group" style="display: none;">
+                                <label for="uniformitySlider" class="form-label">
+                                    Uniformity: <span class="label-value" id="uniformityValue">0.8</span>
+                                    <span class="range-text" id="uniformityRange">Range: Loading...</span>
+                                </label>
+                                <input type="range" id="uniformitySlider" class="form-range" min="0" max="1" value="0.8" step="0.1">
+                                <div class="validation-status" id="uniformityStatus">Evaluating...</div>
+                        </div>
+                        
+                        <div class="controller-group" style="display: none;">
+                                <label for="exposureSlider" class="form-label">
+                                    Exposure Duration (hrs): <span class="label-value" id="exposureValue">8</span>
+                                    <span class="range-text" id="exposureRange">Range: Loading...</span>
+                                </label>
+                                <input type="range" id="exposureSlider" class="form-range" min="1" max="12" value="8" step="1">
+                                <div class="validation-status" id="exposureStatus">Evaluating...</div>
+                        </div>
+                        
+                        <div class="controller-group">
+                                <label for="luxSlider" class="form-label">
+                                    Lux: <span class="label-value" id="luxValue">500</span>
+                                    <span class="range-text" id="luxRange">Range: Loading...</span>
+                                </label>
+                                <input type="range" id="luxSlider" class="form-range" min="0" max="1000" value="500" step="10">
+                                <div class="validation-status" id="luxStatus">Evaluating...</div>
+                        </div>
+                    </div>
+
+                    <div class="form-action-buttons">
+                        <button type="button" class="btn btn-danger" style="display: none;" onclick="compareValues()">
+                            Compare with Recommendations
+                        </button>
+                    </div>
+                </div>
+            </div> <!-- Close classroom-container -->
+
+        <div class="form-section-container">
+            <div id="comparisonResults" class="results-card" style="display: none;">
+                <div class="results-card-body">
+                    <h4 class="text-danger">Comparison Results</h4>
+                    <div id="comparisonContent">
+                        </div>
+                </div>
+            </div>
+            
+            <!-- Recommendation Cards Section -->
+            <div id="recommendationCards" class="recommendation-cards" style="margin-top: 20px; display: none;">
+                <!-- Recommendation cards will be dynamically generated here -->
+            </div>
+        </div>
+            <div class="general-info">
+                    <div class="info-card">
+                        <h5>CCT (Color Temperature)</h5>
+                        <p>Color temperature affects mood and concentration. Warmer temperatures (2700K-3000K) are better for young children.</p>
+                    </div>
+                
+                    <div class="info-card">
+                        <h5>CRI (Color Rendering Index)</h5>
+                        <p>CRI measures how accurately colors are rendered. Higher CRI (90+) is essential for educational activities.</p>
+                    </div>
+                
+                    <div class="info-card">
+                        <h5>Flicker</h5>
+                        <p>Flicker can cause eye strain and headaches. Lower flicker percentages are better for learning environments.</p>
+                    </div>
+                
+                    <div class="info-card">
+                        <h5>Glare (UGR)</h5>
+                        <p>Unified Glare Rating measures visual comfort. Lower UGR values provide better visual comfort.</p>
+                    </div>
+                
+                    <div class="info-card">
+                        <h5>Uniformity</h5>
+                        <p>Uniformity measures the consistency of lighting across a space. Higher values indicate more even lighting distribution.</p>
+                    </div>
+                
+                    <div class="info-card">
+                        <h5>Melanopic EDI</h5>
+                        <p>Melanopic Equivalent Daylight Illuminance affects circadian rhythms and alertness. Higher values promote better wakefulness.</p>
+                    </div>
+                
+                    <div class="info-card">
+                        <h5>Vertical Illuminance</h5>
+                        <p>Vertical illuminance measures light falling on vertical surfaces. Important for visual comfort and task performance.</p>
+                    </div>
+                
+                    <div class="info-card">
+                        <h5>Exposure Duration</h5>
+                        <p>Exposure duration affects the cumulative impact of lighting on health and performance. Longer exposure requires more careful consideration.</p>
+                    </div>
+                
+                    <div class="info-card">
+                        <h5>Lux (Illuminance)</h5>
+                        <p>Lux measures the amount of light falling on a surface. Proper illuminance levels are crucial for visual comfort and task performance.</p>
+                    </div>
+
+            </div>
+    </main>
+
+    <!-- All functionality is now handled by simulator.js -->
+
+    <!-- External Simulator JavaScript -->
+    <script src="simulator.js"></script>
+
+    <script>
+        // Initialize the simulator when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeSimulator();
+            // compareValues();
+        });
+    </script>
+</body>
+</html>

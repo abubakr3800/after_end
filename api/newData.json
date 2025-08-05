@@ -1,0 +1,479 @@
+{
+    "kinder": {
+        "age_range": "3-6",
+        "CRI": [
+            {
+                "range": {
+                    "min": 90,
+                    "max": 100,
+                    "unit": ""
+                },
+                "rating": "good",
+                "reason": "High CRI is essential for color-sensitive activities like drawing and learning objects.",
+                "recommendation": "Use LEDs with CRI \u226590 in art and play zones."
+            },
+            {
+                "range": {
+                    "min": 80,
+                    "max": 89,
+                    "unit": ""
+                },
+                "rating": "medium",
+                "reason": "Moderate CRI may be acceptable for general lighting.",
+                "recommendation": "Use \u226580 CRI in shared areas but prioritize higher CRI in activity zones."
+            },
+            {
+                "range": {
+                    "min": 0,
+                    "max": 79,
+                    "unit": ""
+                },
+                "rating": "bad",
+                "reason": "Poor color accuracy can impair visual development and reduce engagement.",
+                "recommendation": "Avoid low-CRI fixtures; ensure color accuracy for young learners."
+            }
+        ],
+        "CCT": [
+            {
+                "range": {
+                    "min": 2700,
+                    "max": 3000,
+                    "unit": "K"
+                },
+                "rating": "good",
+                "reason": "Warm light creates a comforting and calm environment, supporting emotional security.",
+                "recommendation": "Install warm-white LEDs in nurseries and playrooms."
+            },
+            {
+                "range": {
+                    "min": 2999,
+                    "max": 3999,
+                    "unit": "K"
+                },
+                "rating": "medium",
+                "reason": "Neutral tones are acceptable but not ideal for early development.",
+                "recommendation": "Use with dimming in active zones only."
+            },
+            {
+                "range": {
+                    "min": 4000,
+                    "max": 6500,
+                    "unit": "K"
+                },
+                "rating": "bad",
+                "reason": "Cool light may overstimulate young children and disrupt rest patterns.",
+                "recommendation": "Avoid cool CCT in preschool areas; use warmer tones instead."
+            }
+        ],
+        "Lux": [
+            {
+                "range": {
+                    "min": 300,
+                    "max": 1000,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Ensures sufficient brightness for play without causing overstimulation.",
+                "recommendation": "Use general lighting plus dimmable zones for naps and quiet time."
+            },
+            {
+                "range": {
+                    "min": 199,
+                    "max": 299,
+                    "unit": "lux"
+                },
+                "rating": "medium",
+                "reason": "May be suitable for quiet or nap areas.",
+                "recommendation": "Use soft lighting in nap zones or indirect corners."
+            },
+            {
+                "range": {
+                    "min": 0,
+                    "max": 199,
+                    "unit": "lux"
+                },
+                "rating": "bad",
+                "reason": "Too dim lighting hinders visual growth and safe movement.",
+                "recommendation": "Maintain minimum lighting of 300 lux in active areas."
+            }
+        ],
+        "UGR": [
+            {
+                "range": {
+                    "min": 0,
+                    "max": 22,
+                    "unit": ""
+                },
+                "rating": "good",
+                "reason": "Minimizes visual discomfort for sensitive young eyes.",
+                "recommendation": "Use fixtures with diffusers and avoid direct beam paths."
+            },
+            {
+                "range": {
+                    "min": 23,
+                    "max": 24,
+                    "unit": ""
+                },
+                "rating": "medium",
+                "reason": "Acceptable for brief exposure but not ideal.",
+                "recommendation": "Limit exposure in active learning zones."
+            },
+            {
+                "range": {
+                    "min": 25,
+                    "max": 30,
+                    "unit": ""
+                },
+                "rating": "bad",
+                "reason": "High glare increases distraction and may affect behavior.",
+                "recommendation": "Use matte surfaces and indirect light fixtures."
+            }
+        ],
+        "Flicker": [
+            {
+                "range": {
+                    "min": 1,
+                    "max": 8,
+                    "unit": "%"
+                },
+                "rating": "good",
+                "reason": "Flicker-free lighting prevents headaches and overstimulation in sensitive young children.",
+                "recommendation": "Use flicker-free LED drivers, especially in special needs or nap zones."
+            },
+            {
+                "range": {
+                    "min": 6,
+                    "max": 8,
+                    "unit": "%"
+                },
+                "rating": "medium",
+                "reason": "Mild flicker may be tolerable but not recommended.",
+                "recommendation": "Use with caution and monitor student feedback."
+            },
+            {
+                "range": {
+                    "min": 8,
+                    "max": 100,
+                    "unit": "%"
+                },
+                "rating": "bad",
+                "reason": "Visible flicker can increase hyperactivity and discomfort.",
+                "recommendation": "Avoid budget LEDs with unstable drivers."
+            }
+        ],
+        "Uniformity": [
+            {
+                "range": {
+                    "min": 0.7,
+                    "max": 1.0,
+                    "unit": "U\u2080"
+                },
+                "rating": "good",
+                "reason": "Ensures even lighting across play and learning areas.",
+                "recommendation": "Design layout with consistent lux across all child-accessible zones."
+            },
+            {
+                "range": {
+                    "min": 0.5,
+                    "max": 0.69,
+                    "unit": "U\u2080"
+                },
+                "rating": "medium",
+                "reason": "Acceptable in corridors or secondary spaces.",
+                "recommendation": "Improve lighting for main play areas."
+            },
+            {
+                "range": {
+                    "min": 0.0,
+                    "max": 0.49,
+                    "unit": "U\u2080"
+                },
+                "rating": "bad",
+                "reason": "Uneven lighting causes confusion and discomfort.",
+                "recommendation": "Redesign layout to ensure consistency."
+            }
+        ],
+        "Melanopic_EDI": [
+            {
+                "range": {
+                    "min": 50,
+                    "max": 300,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Supports circadian rhythm alignment and sleep cycle stability.",
+                "recommendation": "Use dynamic white lighting to match morning/day cycles."
+            },
+            {
+                "range": {
+                    "min": 30,
+                    "max": 49,
+                    "unit": "lux"
+                },
+                "rating": "medium",
+                "reason": "Moderate effect on biological function.",
+                "recommendation": "Supplement with daylight exposure."
+            },
+            {
+                "range": {
+                    "min": 0,
+                    "max": 29,
+                    "unit": "lux"
+                },
+                "rating": "bad",
+                "reason": "Insufficient melanopic stimulation.",
+                "recommendation": "Introduce higher quality blue-enriched lighting."
+            }
+        ],
+        "Vertical_Illuminance": [
+            {
+                "range": {
+                    "min": 100,
+                    "max": 150,
+                    "unit": "lux"
+                },
+                "rating": "good",
+                "reason": "Helps young children perceive facial cues and vertical surfaces.",
+                "recommendation": "Ensure soft uplight or wall washers to enhance facial recognition."
+            },
+            {
+                "range": {
+                    "min": 60,
+                    "max": 99,
+                    "unit": "lux"
+                },
+                "rating": "medium",
+                "reason": "Partially sufficient for vertical interaction.",
+                "recommendation": "Use reflective surfaces and ambient bounce light."
+            },
+            {
+                "range": {
+                    "min": 0,
+                    "max": 59,
+                    "unit": "lux"
+                },
+                "rating": "bad",
+                "reason": "Inhibits recognition of expressions and wall-mounted materials.",
+                "recommendation": "Add vertical lighting in play and instruction areas."
+            }
+        ],
+        "Exposure_Duration": [
+            {
+                "range": {
+                    "min": 2,
+                    "max": 8,
+                    "unit": "hours"
+                },
+                "rating": "good",
+                "reason": "Controlled exposure supports rest/activity balance.",
+                "recommendation": "Use dimmable lighting with natural daylight rhythms."
+            },
+            {
+                "range": {
+                    "min": 1,
+                    "max": 1.9,
+                    "unit": "hours"
+                },
+                "rating": "medium",
+                "reason": "Some benefit but less impact on mood regulation.",
+                "recommendation": "Extend exposure time especially in morning."
+            },
+            {
+                "range": {
+                    "min": 0,
+                    "max": 0.9,
+                    "unit": "hours"
+                },
+                "rating": "bad",
+                "reason": "Too short to affect biological rhythm.",
+                "recommendation": "Increase lighting exposure during core hours."
+            }
+        ]
+    },
+    "primary": {
+        "age_range": "6-12",
+        "CRI": {
+            "range": [
+                80,
+                100
+            ],
+            "rating": "good",
+            "reason": "Accurate color rendering helps with learning and visual comfort.",
+            "recommendation": "Use CRI above 80 in primary school classrooms.",
+            "unit": ""
+        },
+        "CCT": {
+            "range": [
+                3500,
+                5000
+            ],
+            "rating": "good",
+            "reason": "Cooler white light can increase alertness and attention span.",
+            "recommendation": "Use CCT between 3500K and 5000K.",
+            "unit": "K"
+        },
+        "Lux": {
+            "range": [
+                300,
+                750
+            ],
+            "rating": "good",
+            "reason": "Sufficient brightness improves reading and concentration.",
+            "recommendation": "Horizontal illuminance should be 300\u2013750 lux.",
+            "unit": "lux"
+        },
+        "UGR": {
+            "range": [
+                10,
+                19
+            ],
+            "rating": "good",
+            "reason": "UGR < 19 is appropriate for prolonged reading and writing.",
+            "recommendation": "UGR should be below 19 in classrooms.",
+            "unit": ""
+        },
+        "Flicker": {
+            "range": [
+                1,
+                8
+            ],
+            "rating": "good",
+            "reason": "Low flicker supports visual comfort and concentration.",
+            "recommendation": "Use low-flicker lighting (<10%) OR ( > 1250 ).",
+            "unit": "%"
+        },
+        "Uniformity": {
+            "range": [
+                0.6,
+                1.0
+            ],
+            "rating": "good",
+            "reason": "Uniform light distribution reduces eye strain during study.",
+            "recommendation": "Uniformity ratio should be \u2265 0.6.",
+            "unit": "U\u2080"
+        },
+        "Melanopic_EDI": {
+            "range": [
+                200,
+                300
+            ],
+            "rating": "good",
+            "reason": "Melanopic light helps maintain attention and circadian balance.",
+            "recommendation": "Ensure 200\u2013300 lux melanopic EDI in morning sessions.",
+            "unit": "lux"
+        },
+        "Vertical_Illuminance": {
+            "range": [
+                150,
+                250
+            ],
+            "rating": "good",
+            "reason": "Enhances student engagement and facial visibility.",
+            "recommendation": "Vertical illuminance should be 150\u2013250 lux.",
+            "unit": "lux"
+        },
+        "Exposure_Duration": {
+            "range": [
+                1,
+                3
+            ],
+            "rating": "good",
+            "reason": "Balanced light exposure promotes healthy sleep patterns.",
+            "recommendation": "Morning exposure should last 1\u20133 hours.",
+            "unit": "hours"
+        }
+    },
+    "adults": {
+        "age_range": "12-18",
+        "CRI": {
+            "range": [
+                80,
+                100
+            ],
+            "rating": "good",
+            "reason": "Maintains accurate color discrimination and professional task performance.",
+            "recommendation": "Use CRI > 80 in adult learning or work environments.",
+            "unit": ""
+        },
+        "CCT": {
+            "range": [
+                4000,
+                6500
+            ],
+            "rating": "good",
+            "reason": "Cool white light enhances focus and productivity.",
+            "recommendation": "Use CCT between 4000K and 6500K for alertness.",
+            "unit": "K"
+        },
+        "Lux": {
+            "range": [
+                500,
+                1000
+            ],
+            "rating": "good",
+            "reason": "Higher illuminance helps maintain visual acuity during prolonged tasks.",
+            "recommendation": "Maintain 500\u20131000 lux in working environments.",
+            "unit": "lux"
+        },
+        "UGR": {
+            "range": [
+                10,
+                19
+            ],
+            "rating": "good",
+            "reason": "Reduces glare discomfort in visually intensive tasks.",
+            "recommendation": "Keep UGR under 19.",
+            "unit": ""
+        },
+        "Flicker": {
+            "range": [
+                1,
+                8
+            ],
+            "rating": "good",
+            "reason": "Reduces eye fatigue during long periods of screen use or reading.",
+            "recommendation": "Use flicker-free drivers.",
+            "unit": "%"
+        },
+        "Uniformity": {
+            "range": [
+                0.7,
+                1.0
+            ],
+            "rating": "good",
+            "reason": "Consistent lighting improves overall comfort and reduces errors.",
+            "recommendation": "Uniformity (U\u2080) should exceed 0.7.",
+            "unit": "U\u2080"
+        },
+        "Melanopic_EDI": {
+            "range": [
+                250,
+                400
+            ],
+            "rating": "good",
+            "reason": "Stimulates alertness and maintains circadian rhythm in adults.",
+            "recommendation": "Ensure 250\u2013400 lux melanopic EDI during work hours.",
+            "unit": "lux"
+        },
+        "Vertical_Illuminance": {
+            "range": [
+                200,
+                300
+            ],
+            "rating": "good",
+            "reason": "Supports facial interaction and visual ergonomics.",
+            "recommendation": "Vertical illuminance should range from 200\u2013300 lux.",
+            "unit": "lux"
+        },
+        "Exposure_Duration": {
+            "range": [
+                1,
+                4
+            ],
+            "rating": "good",
+            "reason": "Sustained exposure needed to regulate adult circadian function.",
+            "recommendation": "Provide exposure for 1\u20134 hours depending on task timing.",
+            "unit": "hours"
+        }
+    }
+}
