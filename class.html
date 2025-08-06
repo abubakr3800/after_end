@@ -523,5 +523,88 @@
             // compareValues();
         });
     </script>
+
+<script>
+    const luxSlider = document.getElementById('luxSlider');
+    const glareSlider = document.getElementById('glareSlider');
+  
+    const luxOverlay = document.createElement('div');
+    luxOverlay.id = 'luxOverlay';
+    document.getElementById("appendImage").appendChild(luxOverlay);
+  
+    const glareEffect = document.createElement('div');
+    glareEffect.id = 'glareEffect';
+    document.getElementById("appendImage").appendChild(glareEffect);
+  
+    // Inject necessary CSS (if not already included)
+    const style = document.createElement('style');
+    style.textContent = `
+      #luxOverlay {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: white;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 1000;
+        transition: opacity 0.4s ease;
+        mix-blend-mode: screen;
+      }
+  
+      #glareEffect {
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(white, transparent);
+        border-radius: 50%;
+        opacity: 0;
+        pointer-events: none;
+        z-index: 1001;
+        transition: opacity 0.3s ease;
+      }
+  
+      .glare-pulse {
+        animation: glarePulse 1.2s infinite ease-in-out;
+      }
+  
+      @keyframes glarePulse {
+        0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+        50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.8; }
+        100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+      }
+    `;
+    document.head.appendChild(style);
+  
+    // Lux Animation
+    luxSlider.addEventListener('input', () => {
+      const luxValue = parseInt(luxSlider.value);
+      const opacity = (luxValue / 2000) - .5;
+      luxOverlay.style.opacity = opacity;
+    //   document.getElementById('luxValue').innerText = luxValue;
+    });
+  
+    // Glare Animation
+    glareSlider.addEventListener('input', () => {
+      const glareValue = parseInt(glareSlider.value);
+    //   document.getElementById('glareValue').innerText = glareValue;
+  
+      if (glareValue >= 10) {
+        glareEffect.classList.add('glare-pulse');
+        glareEffect.style.opacity = 0.6;
+      } else {
+        glareEffect.classList.remove('glare-pulse');
+        glareEffect.style.opacity = 0;
+      }
+    });
+  
+    // Initial trigger
+    window.addEventListener('DOMContentLoaded', () => {
+      luxSlider.dispatchEvent(new Event('input'));
+      glareSlider.dispatchEvent(new Event('input'));
+    });
+  </script>
 </body>
 </html>
