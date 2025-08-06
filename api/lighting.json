@@ -23,8 +23,8 @@
             },
             "CCT": {
               "range": {
-                "min": 4000,
-                "max": 5000,
+                "min": 2700,
+                "max": 3500,
                 "unit": "K"
               },
               "reason": "Optimal for alertness and concentration.",
@@ -838,4 +838,4 @@
       }
     }
   }
-} 
+}

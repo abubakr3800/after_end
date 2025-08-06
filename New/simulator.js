@@ -184,8 +184,12 @@ async function loadApiData() {
         // Update validation status after loading data
         setTimeout(() => {
             updateValidationStatus();
-        }, 200);
+        }, 20000);
         
+        // // Update info cards with dynamic data
+        // updateInfoCards();
+                
+
         compareValues(); // Compare values after loading data
         
         // Hide preloader after everything is loaded (3 seconds)
@@ -504,6 +508,17 @@ function updateImageCounter() {
 
 // Initialize canvas and load classroom image
 function initializeCanvas() {
+    // Check for both possible container IDs
+    let infoCardsContainer = document.getElementById('infoCards');
+    if (!infoCardsContainer) {
+        infoCardsContainer = document.getElementById('info-cards');
+    }
+    
+    if (!infoCardsContainer) {
+        console.log('Info cards container not found (checked both infoCards and info-cards)');
+        return;
+    }
+    
     canvas = document.getElementById('lightingCanvas');
     if (!canvas) {
         console.warn('Canvas element not found');
@@ -797,6 +812,104 @@ function processImageWithLighting(cct, cri, glare, flicker) {
     
     // Draw processed image back to canvas
     ctx.putImageData(imageData, 0, 0);
+}
+
+/**
+ * Info Cards Functions
+ */
+
+// Function to update info cards based on selected age and environment
+function updateInfoCards() {
+    if (!apiData || !selectedGrade || !selectedEnvironment) {
+        console.log('Cannot update info cards: missing data');
+        return;
+    }
+
+    const gradeData = apiData[selectedGrade];
+    const environmentData = gradeData?.lighting_data?.recommendation_levels?.highly_recommended?.environments?.[selectedEnvironment];
+    
+    if (!environmentData) {
+        console.log('No environment data found for:', selectedGrade, selectedEnvironment);
+        return;
+    }
+
+    // Check for both possible container IDs (infoCards for class.html, info-cards for New/classroom.html)
+    let infoCardsContainer = document.getElementById('infoCards');
+    if (!infoCardsContainer) {
+        infoCardsContainer = document.getElementById('info-cards');
+    }
+    
+    if (!infoCardsContainer) {
+        console.log('Info cards container not found (checked both infoCards and info-cards)');
+        return;
+    }
+
+    // Define the parameters to display
+    const parameters = [
+        { key: 'CCT', name: 'CCT (Color Temperature)', description: 'Color temperature affects mood and concentration.' },
+        { key: 'CRI', name: 'CRI (Color Rendering Index)', description: 'CRI measures how accurately colors are rendered.' },
+        { key: 'Flicker', name: 'Flicker', description: 'Flicker can cause eye strain and headaches.' },
+        { key: 'UGR', name: 'Glare (UGR)', description: 'Unified Glare Rating measures visual comfort.' },
+        { key: 'Uniformity', name: 'Uniformity', description: 'Uniformity measures the consistency of lighting across a space.' },
+        { key: 'Melanopic_EDI', name: 'Melanopic EDI', description: 'Melanopic Equivalent Daylight Illuminance affects circadian rhythms.' },
+        { key: 'Vertical_Illuminance', name: 'Vertical Illuminance', description: 'Vertical illuminance improves face visibility and comfort.' },
+        { key: 'Exposure_Duration', name: 'Exposure Duration', description: 'Exposure duration affects the cumulative impact of lighting on health.' },
+        { key: 'Lux', name: 'Lux (Illuminance)', description: 'Lux measures the amount of light falling on a surface.' }
+    ];
+
+    // Generate HTML for info cards
+    let cardsHTML = '';
+    
+    parameters.forEach(param => {
+        const paramData = environmentData[param.key];
+        if (paramData && paramData.range) {
+            const { min, max, unit } = paramData.range;
+            const { reason, recommendation } = paramData;
+            
+            // Use different HTML structure based on container type
+            if (infoCardsContainer.id === 'info-cards') {
+                // Structure for New/classroom.html
+                cardsHTML += `
+                    <div class="info-card">
+                        <h5>${param.name}</h5>
+                        <div class="range-info">
+                            <small class="text-warning">Range: ${min}-${max}${unit ? ' ' + unit : ''}</small>
+                        </div>
+                        <p>${param.description}</p>
+                        <div class="recommendation-info">
+                            <small class="text-info">${reason}</small><br>
+                            <small class="text-success">${recommendation}</small>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Structure for class.html (Bootstrap cards)
+                cardsHTML += `
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                            <div class="card-body">
+                                <h5 class="text-danger">${param.name}</h5>
+                                <div class="mb-2">
+                                    <small class="text-warning">Range: ${min}-${max}${unit ? ' ' + unit : ''}</small>
+                                </div>
+                                <p class="text-light mb-2">${param.description}</p>
+                                <div class="mt-2">
+                                    <small class="text-info">${reason}</small>
+                                </div>
+                                <div class="mt-1">
+                                    <small class="text-success">${recommendation}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+    });
+
+    // Update the container
+    infoCardsContainer.innerHTML = cardsHTML;
+    console.log('Info cards updated for:', selectedGrade, selectedEnvironment);
 }
 
 /**

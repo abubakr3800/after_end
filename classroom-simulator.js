@@ -166,11 +166,13 @@ async function loadApiData() {
         // Set slider ranges based on API data for the selected grade
         setSliderRanges();
         
-        updatePreloaderMessage('Setting up validation...');
         // Update validation status after loading data
         setTimeout(() => {
-            // updateValidationStatus();
+            updateValidationStatus();
         }, 20000);
+        
+        // Update info cards with dynamic data
+        updateInfoCards();
         
         compareValues(); // Compare values after loading data
         
@@ -289,6 +291,54 @@ function updateSliderValue(sliderId, valueId) {
             applyVisualEffects(); // Apply visual effects when slider changes
         });
     }
+}
+
+// Function to update validation status for all sliders
+function updateValidationStatus() {
+    if (!apiData || !selectedGrade || !selectedEnvironment) {
+        console.log('Cannot update validation status: missing data');
+        return;
+    }
+
+    const gradeData = apiData[selectedGrade];
+    const environmentData = gradeData?.lighting_data?.recommendation_levels?.highly_recommended?.environments?.[selectedEnvironment];
+    
+    if (!environmentData) {
+        console.log('No environment data found for validation');
+        return;
+    }
+
+    // Define parameters to validate
+    const parameters = [
+        { sliderId: 'cctSlider', key: 'CCT' },
+        { sliderId: 'criSlider', key: 'CRI' },
+        { sliderId: 'flickerSlider', key: 'Flicker' },
+        { sliderId: 'glareSlider', key: 'UGR' },
+        { sliderId: 'verticalSlider', key: 'Vertical_Illuminance' },
+        { sliderId: 'luxSlider', key: 'Lux' }
+    ];
+
+    parameters.forEach(param => {
+        const slider = document.getElementById(param.sliderId);
+        const paramData = environmentData[param.key];
+        
+        if (slider && paramData && paramData.range) {
+            const currentValue = parseInt(slider.value);
+            const { min, max } = paramData.range;
+            
+            // Remove existing validation classes
+            slider.classList.remove('is-valid', 'is-invalid');
+            
+            // Add appropriate validation class
+            if (currentValue >= min && currentValue <= max) {
+                slider.classList.add('is-valid');
+            } else {
+                slider.classList.add('is-invalid');
+            }
+        }
+    });
+    
+    console.log('Validation status updated');
 }
 
 /**
@@ -623,6 +673,80 @@ function processImageWithLighting(cct, cri, glare, flicker) {
 }
 
 /**
+ * Info Cards Functions
+ */
+
+// Function to update info cards based on selected age and environment
+function updateInfoCards() {
+    if (!apiData || !selectedGrade || !selectedEnvironment) {
+        console.log('Cannot update info cards: missing data');
+        return;
+    }
+
+    const gradeData = apiData[selectedGrade];
+    const environmentData = gradeData?.lighting_data?.recommendation_levels?.highly_recommended?.environments?.[selectedEnvironment];
+    
+    if (!environmentData) {
+        console.log('No environment data found for:', selectedGrade, selectedEnvironment);
+        return;
+    }
+
+    const infoCardsContainer = document.getElementById('infoCards');
+    if (!infoCardsContainer) {
+        console.log('Info cards container not found');
+        return;
+    }
+
+    // Define the parameters to display
+    const parameters = [
+        { key: 'CCT', name: 'CCT (Color Temperature)', description: 'Color temperature affects mood and concentration.' },
+        { key: 'CRI', name: 'CRI (Color Rendering Index)', description: 'CRI measures how accurately colors are rendered.' },
+        { key: 'Flicker', name: 'Flicker', description: 'Flicker can cause eye strain and headaches.' },
+        { key: 'UGR', name: 'Glare (UGR)', description: 'Unified Glare Rating measures visual comfort.' },
+        { key: 'Uniformity', name: 'Uniformity', description: 'Uniformity measures the consistency of lighting across a space.' },
+        { key: 'Melanopic_EDI', name: 'Melanopic EDI', description: 'Melanopic Equivalent Daylight Illuminance affects circadian rhythms.' },
+        { key: 'Vertical_Illuminance', name: 'Vertical Illuminance', description: 'Vertical illuminance improves face visibility and comfort.' },
+        { key: 'Exposure_Duration', name: 'Exposure Duration', description: 'Exposure duration affects the cumulative impact of lighting on health.' },
+        { key: 'Lux', name: 'Lux (Illuminance)', description: 'Lux measures the amount of light falling on a surface.' }
+    ];
+
+    // Generate HTML for info cards
+    let cardsHTML = '';
+    
+    parameters.forEach(param => {
+        const paramData = environmentData[param.key];
+        if (paramData && paramData.range) {
+            const { min, max, unit } = paramData.range;
+            const { reason, recommendation } = paramData;
+            
+            cardsHTML += `
+                <div class="col-lg-3 col-md-6">
+                    <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
+                        <div class="card-body">
+                            <h5 class="text-danger">${param.name}</h5>
+                            <div class="mb-2">
+                                <small class="text-warning">Range: ${min}-${max}${unit ? ' ' + unit : ''}</small>
+                            </div>
+                            <p class="text-light mb-2">${param.description}</p>
+                            <div class="mt-2">
+                                <small class="text-info">${reason}</small>
+                            </div>
+                            <div class="mt-1">
+                                <small class="text-success">${recommendation}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    });
+
+    // Update the container
+    infoCardsContainer.innerHTML = cardsHTML;
+    console.log('Info cards updated for:', selectedGrade, selectedEnvironment);
+}
+
+/**
  * Comparison and Recommendation Functions
  */
 
@@ -908,6 +1032,7 @@ function initializeSimulator() {
 // Export functions for use in HTML
 window.initializeSimulator = initializeSimulator;
 window.compareValues = compareValues;
+window.updateInfoCards = updateInfoCards;
 // window.applyVisualEffects = applyVisualEffects;
 // window.cycleToNextImage = cycleToNextImage;
-// window.cycleToPreviousImage = cycleToPreviousImage; 
+// window.cycleToPreviousImage = cycleToPreviousImage;
