@@ -184,10 +184,10 @@ async function loadApiData() {
         // Update validation status after loading data
         setTimeout(() => {
             updateValidationStatus();
-        }, 20000);
+        }, 2000);
         
         // // Update info cards with dynamic data
-        // updateInfoCards();
+        updateInfoCards();
                 
 
         compareValues(); // Compare values after loading data
@@ -293,7 +293,7 @@ function setSliderRanges() {
     
     // Initialize canvas after setting slider ranges (when API data is available)
     setTimeout(() => {
-        initializeCanvas();
+        // initializeCanvas();
     }, 100);
 }
 
@@ -459,6 +459,7 @@ function updateParameterValidation(paramName, currentValue, paramDataArray, stat
     }
     
     statusElement.textContent = statusText;
+    // statusElement.innerHTML = ( bestRating === 'bad' ? '' : '<i class="fa-solid fa-check"></i>' )+ statusText;
     statusElement.className = `validation-status ${bestRating}`;
 }
 
@@ -507,7 +508,7 @@ function updateImageCounter() {
 }
 
 // Initialize canvas and load classroom image
-function initializeCanvas() {
+function initializeCanvas(currentImageState = 0) {
     // Check for both possible container IDs
     let infoCardsContainer = document.getElementById('infoCards');
     if (!infoCardsContainer) {
@@ -549,17 +550,21 @@ function initializeCanvas() {
     classroomImage.onerror = function() {
         console.error('Failed to load classroom image');
         // Try to load a fallback image
-        classroomImage.src = 'assets/secondary.jpg';
+        classroomImage.src = (currentImageState == 0 ? apiData[selectedGrade].lighting_data.recommendation_levels.highly_recommended.environments[selectedEnvironment].emotion.happyPerson : apiData[selectedGrade].lighting_data.recommendation_levels.highly_recommended.environments[selectedEnvironment].emotion.sadPerson );
     };
     
     // Use appropriate image based on environment and API data
-    const imagePath = getClassroomImagePath(currentImageIndex);
+    const imagePath = getClassroomImagePath(currentImageState);
     // classroomImage.src = imagePath;
-    classroomImage.src = "assets/school.png";
+    console.log(apiData[selectedGrade].lighting_data.recommendation_levels.highly_recommended.environments[selectedEnvironment].emotion.happyPerson);
+    console.log(apiData[selectedGrade].lighting_data.recommendation_levels.highly_recommended.environments[selectedEnvironment].emotion.sadPerson);
+    console.log(selectedGrade);
+    console.log(selectedEnvironment);
+    classroomImage.src = (currentImageState == 0 ? apiData[selectedGrade].lighting_data.recommendation_levels.highly_recommended.environments[selectedEnvironment].emotion.happyPerson : apiData[selectedGrade].lighting_data.recommendation_levels.highly_recommended.environments[selectedEnvironment].emotion.sadPerson );
 }
 
 // Function to get appropriate classroom image based on environment
-function getClassroomImagePath(imageIndex = 0) {
+function getClassroomImagePath(imageState = 0) {
     if (!apiData || !selectedGrade || !selectedEnvironment) {
         console.warn('No API data or selection data available, using default image');
         return 'assets/secondary.jpg'; // Default fallback
@@ -586,22 +591,22 @@ function getClassroomImagePath(imageIndex = 0) {
     
     if (!selectedEnvData || !selectedEnvData.images || !Array.isArray(selectedEnvData.images)) {
         console.warn('No images found for environment:', selectedEnvironment);
-        return 'assets/secondary.jpg'; // Default fallback
+        return apiData[selectedGrade].lighting_data.recommendation_levels.highly_recommended.environments[selectedEnvironment].emotion.happyPerson; // Default fallback
     }
     
     // Get the image at the specified index (or random if no index specified)
     const images = selectedEnvData.images;
     let selectedImage;
     
-    if (imageIndex >= 0 && imageIndex < images.length) {
-        selectedImage = images[imageIndex];
+    if (imageState >= 0 && imageState < images.length) {
+        selectedImage = images[imageState];
     } else {
         // Fallback to random image
         const randomIndex = Math.floor(Math.random() * images.length);
         selectedImage = images[randomIndex];
     }
     
-    console.log('Selected image for environment:', selectedEnvironment, 'Image:', selectedImage, 'Index:', imageIndex);
+    console.log('Selected image for environment:', selectedEnvironment, 'Image:', selectedImage, 'Index:', imageState);
     return selectedImage;
 }
 
@@ -629,10 +634,10 @@ function cycleToNextImage() {
     }
     
     const images = selectedEnvData.images;
-    currentImageIndex = (currentImageIndex + 1) % images.length;
+    currentImageState = (currentImageState + 1) % images.length;
     
     // Reload the image
-    const newImagePath = getClassroomImagePath(currentImageIndex);
+    const newImagePath = getClassroomImagePath(currentImageState);
     if (classroomImage) {
         classroomImage.src = newImagePath;
     }
@@ -667,10 +672,10 @@ function cycleToPreviousImage() {
     }
     
     const images = selectedEnvData.images;
-    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    currentImageState = (currentImageState - 1 + images.length) % images.length;
     
     // Reload the image
-    const newImagePath = getClassroomImagePath(currentImageIndex);
+    const newImagePath = getClassroomImagePath(currentImageState);
     if (classroomImage) {
         classroomImage.src = newImagePath;
     }
@@ -834,10 +839,11 @@ function updateInfoCards() {
     }
 
     // Check for both possible container IDs (infoCards for class.html, info-cards for New/classroom.html)
-    let infoCardsContainer = document.getElementById('infoCards');
-    if (!infoCardsContainer) {
-        infoCardsContainer = document.getElementById('info-cards');
-    }
+    // let infoCardsContainer = document.getElementById('infoCards');
+    // if (!infoCardsContainer) {
+    //     infoCardsContainer = document.getElementById('info-cards');
+    // }
+    let infoCardsContainer = document.getElementById('info-cards');
     
     if (!infoCardsContainer) {
         console.log('Info cards container not found (checked both infoCards and info-cards)');
@@ -872,22 +878,24 @@ function updateInfoCards() {
                 cardsHTML += `
                     <div class="info-card">
                         <h5>${param.name}</h5>
-                        <div class="range-info">
-                            <small class="text-warning">Range: ${min}-${max}${unit ? ' ' + unit : ''}</small>
-                        </div>
-                        <p>${param.description}</p>
-                        <div class="recommendation-info">
-                            <small class="text-info">${reason}</small><br>
+                        <!-- <div class="range-info">
+                            
+                        </div> -->
+                        <p>
+                            <small class="text-warning">Range: ${min}-${max}${unit ? ' ' + unit : ''} : And the Value is ${param.value}</small> <br> 
+                            ${param.description} - ${reason}
+                            <!--<small class="text-info">${reason}</small><br>--> <br>
                             <small class="text-success">${recommendation}</small>
-                        </div>
+                        </p>
+                        <!-- <div class="recommendation-info">
+                            
+                        </div> -->
                     </div>
                 `;
             } else {
                 // Structure for class.html (Bootstrap cards)
                 cardsHTML += `
-                    <div class="col-lg-3 col-md-6">
-                        <div class="card bg-secondary bg-opacity-25 border-0 rounded-4 h-100">
-                            <div class="card-body">
+                            <div class="info-card">
                                 <h5 class="text-danger">${param.name}</h5>
                                 <div class="mb-2">
                                     <small class="text-warning">Range: ${min}-${max}${unit ? ' ' + unit : ''}</small>
@@ -900,8 +908,6 @@ function updateInfoCards() {
                                     <small class="text-success">${recommendation}</small>
                                 </div>
                             </div>
-                        </div>
-                    </div>
                 `;
             }
         }
@@ -1039,7 +1045,12 @@ function updateRecommendationCards(currentValues, gradeData) {
                             totalParams += 1;
                         }
                     }
+
+                    // console.log(totalScore);
+                    // console.log(totalParams);
                     
+                    totalParams == totalScore ? initializeCanvas(0) : initializeCanvas(1);
+
                     // Calculate recommendation percentage
                     const recommendationPercentage = totalParams > 0 ? (totalScore / totalParams) * 100 : 0;
                     

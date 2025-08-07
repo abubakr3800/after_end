@@ -102,10 +102,10 @@ body {
 }
 
 .bg-body{
-    background: url(assets/ChatGPT\ Image\ Aug\ 4\,\ 2025\,\ 10_16_13\ PM.png);
+    background: url(assets/school_old.png);
     object-fit: cover;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: 100%  100%;
     background-position: bottom;
 }
 
@@ -150,7 +150,7 @@ main {
 
 .text-info {
     font-size: 1.25em;
-    /* text-transform: uppercase; */
+    text-transform: uppercase;
     font-weight: 300;
     color: hsl(var(--clr-neutral-100));
 }
@@ -291,9 +291,10 @@ main {
 
 .main-content {
     width: 80%;
+    /* width: 100%; */
     margin-inline: auto;
     display: grid;
-    place-content: center;
+    place-content: start;
     padding: 2rem 1rem;
     text-align: center;
 
@@ -599,12 +600,16 @@ main {
     gap: 1rem;
     border-radius: calc(var(--gap)*3);
     background: hsl(var(--clr-neutral-700));
+    box-sizing: border-box;
 }
 
 .info-card{
     padding: 2rem;
     background: hsl(var(--clr-neutral-600));
     border-radius: calc(var(--gap)*2);
+    width: 100%; /* Full width by default (mobile-first) */
+    box-sizing: border-box;
+    display: inline-block;
 }
 
 .info-card h5{
@@ -620,11 +625,95 @@ main {
 /* 5. Responsive Adjustments            */
 /* ==================================== */
 
-@media (max-width: 768px) {
+/* Mobile First Approach - Base styles for mobile */
+@media (max-width: 480px) {
+    :root {
+        --width: 95%;
+        --gap: 0.75rem;
+        --fs: 0.9em;
+    }
+
+    .main-header {
+        width: 95%;
+        padding: 1rem 0;
+    }
+
+    .header-container {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    .display-3 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-card {
+        padding: 1.5rem;
+        margin: 0.5rem;
+        border-radius: calc(var(--gap)*2);
+    }
+
+    .simulation-form {
+        grid-template-columns: 1fr;
+        gap: var(--gap);
+    }
+
+    .controller-group {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .form-action-buttons {
+        grid-template-columns: 1fr;
+        gap: var(--gap);
+        padding-inline: 0;
+    }
+
+    .general-info {
+        grid-template-columns: 1fr;
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+
+    .info-card {
+        padding: 1.5rem;
+        width: 100%; /* Full width on mobile */
+    }
+
+    .form-card-body,
+    .contols-card {
+        margin: 0.5rem;
+        padding: 1.5rem;
+    }
+
+    .credits {
+        position: static;
+        transform: none;
+        margin-top: 2rem;
+        border-radius: calc(var(--gap)*1.5);
+    }
+
+    .bg-body {
+        background-size: cover;
+        background-position: center;
+    }
+}
+
+/* Tablet Portrait */
+@media (min-width: 481px) and (max-width: 768px) {
+    :root {
+        --width: 90%;
+        --gap: 0.875rem;
+    }
+
     .header-container {
         flex-direction: column;
         align-items: flex-start;
         width: 95%;
+        gap: 1rem;
     }
 
     .main-nav {
@@ -661,17 +750,184 @@ main {
     }
 
     .form-card {
-        padding: 1rem;
+        padding: 2rem;
     }
 
-    .form-group {
-        flex: 1 1 100%;
-        max-width: 100%;
+    .simulation-form {
+        grid-template-columns: 1fr;
+        gap: calc(var(--gap)*1.5);
     }
 
-    .btn {
-        padding: 0.75rem 2rem;
-        font-size: 1rem;
+    .controller-group {
+        grid-template-columns: 35% 1fr;
+    }
+
+    .form-action-buttons {
+        grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+    }
+
+    .general-info {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+    }
+
+    .bg-body {
+        background-size: cover;
+    }
+}
+
+/* Tablet Landscape & Small Desktop */
+@media (min-width: 769px) and (max-width: 1024px) {
+    :root {
+        --width: 85%;
+    }
+
+    .simulation-form {
+        grid-template-columns: 1fr 1fr;
+        gap: calc(var(--gap)*1.5);
+    }
+
+    .general-info {
+        grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
+    }
+
+    .form-card {
+        padding: 2.5rem;
+    }
+
+    .info-card {
+        width: calc(50% - 0.5rem); /* Half width on tablet landscape and small desktop */
+    }
+}
+
+/* Large Desktop */
+@media (min-width: 1025px) and (max-width: 1440px) {
+    :root {
+        --width: 80%;
+    }
+
+    .display-3 {
+        font-size: 3.5rem;
+    }
+
+    .general-info {
+        grid-template-columns: repeat(auto-fit, minmax(35rem, 1fr));
+    }
+
+    .info-card {
+        width: calc(50% - 0.5rem); /* Half width on large desktop */
+    }
+}
+
+/* Extra Large Desktop */
+@media (min-width: 1441px) {
+    :root {
+        --width: 75%;
+        --fs: 1.1em;
+    }
+
+    .display-3 {
+        font-size: 4rem;
+    }
+
+    .form-card {
+        padding: 3.5rem;
+    }
+
+    .general-info {
+        grid-template-columns: repeat(auto-fit, minmax(40rem, 1fr));
+        padding: 4rem;
+    }
+}
+
+/* Landscape Orientation Adjustments */
+@media (max-height: 600px) and (orientation: landscape) {
+    .display-3 {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-card {
+        padding: 1.5rem;
+    }
+
+    .credits {
+        position: static;
+        transform: none;
+        margin-top: 1rem;
+        border-radius: calc(var(--gap)*1.5);
+    }
+}
+
+/* High DPI / Retina Display Adjustments */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .site-logo {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+
+    .social-icon {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .credits,
+    .nav-toggle-label,
+    .social-icon {
+        display: none;
+    }
+
+    .form-card {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .form-card {
+        animation: none;
+    }
+}
+
+/* Dark Mode Support (if system preference) */
+@media (prefers-color-scheme: dark) {
+    /* Your existing dark theme is already applied */
+}
+
+/* Light Mode Support */
+@media (prefers-color-scheme: light) {
+    :root {
+        --clr-neutral-100: 0, 0%, 0%;
+        --clr-neutral-200: 0, 0%, 10%;
+        --clr-neutral-300: 0, 0%, 20%;
+        --clr-neutral-400: 0, 0%, 36%;
+        --clr-neutral-600: 0, 0%, 70%;
+        --clr-neutral-700: 0, 0%, 85%;
+        --clr-neutral-800: 0, 0%, 95%;
+        --clr-neutral-900: 0, 0%, 100%;
+    }
+
+    body {
+        background: hsl(var(--clr-neutral-900));
+        color: hsl(var(--clr-neutral-100));
     }
 }
 

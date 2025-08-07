@@ -92,9 +92,9 @@
                 <label for="grade" class="form-label">Select Grade:</label>
                 <select id="grade" class="form-select">
                   <option value="">Choose Grade</option>
-                  <option value="kinder">Kindergarten</option>
+                  <!-- <option value="kinder">Kindergarten</option>
                   <option value="primary">Primary</option>
-                  <option value="adults">Secondary</option>
+                  <option value="adults">Secondary</option> -->
                 </select>
               </div>
 
@@ -102,9 +102,9 @@
                 <label for="environment" class="form-label">Select Environment:</label>
                 <select id="environment" class="form-select">
                   <option value="">Choose Environment</option>
-                  <option value="classroom">Classroom</option>
+                  <!-- <option value="classroom">Classroom</option>
                   <option value="playground">Playground</option>
-                  <option value="laboratory">Laboratory</option>
+                  <option value="laboratory">Laboratory</option> -->
                 </select>
               </div>
 
@@ -139,7 +139,7 @@
         }
 
         try {
-          const response = await fetch("api/data.json");
+          const response = await fetch("api/newData.json");
           const lightingData = await response.json();
           const data = lightingData[grade];
 
@@ -202,6 +202,45 @@
         // Redirect to classroom.html
         window.location.href = "classroom.html";
       }
+
+      window.addEventListener("DOMContentLoaded", async function () {
+        const ageSelect = document.getElementById("grade");
+        const envSelect = document.getElementById("environment");
+
+        // Populate age dropdown
+        // await loadApiData();
+        const response = await fetch("api/lighting.json");
+        const apiData = await response.json();
+        console.log(apiData);
+        
+        for (const age in apiData) {
+          const option = document.createElement("option");
+          option.value = age;
+          option.text = `${age} (${apiData[age].age_range})`;
+          ageSelect.appendChild(option);
+        }
+
+        // Update environments on age change
+        ageSelect.addEventListener("change", function () {
+          const selectedAge = this.value;
+
+          // Clear previous environments
+          envSelect.innerHTML = `<option value="" disabled selected>Select Environment</option>`;
+
+          if (selectedAge && apiData[selectedAge]) {
+              console.log(apiData[selectedAge]);
+              
+            const environments =
+              apiData[selectedAge].recommendation_levels.highly_recommended.environments;
+            for (const env in environments) {
+              const option = document.createElement("option");
+              option.value = env;
+              option.text = env.charAt(0).toUpperCase() + env.slice(1);
+              envSelect.appendChild(option);
+            }
+          }
+        });
+      });
     </script>
   </body>
 </html>

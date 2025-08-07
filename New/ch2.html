@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chain Select - Age and Environment</title>
+  <script>
+    let apiData = {};
+    async function loadApiData() {
+      try {
+        const [dataResponse, lightingResponse] = await Promise.all([
+          fetch('api/newData.json'),
+          fetch('api/lighting.json')
+        ]);
+        
+        const dataJson = await dataResponse.json();
+        const lightingJson = await lightingResponse.json();
+        
+        console.log(dataJson , lightingJson);
+        apiData = {};
+        for (const grade in dataJson) {
+          apiData[grade] = {
+            ...dataJson[grade],
+            lighting_data: lightingJson[grade] || {}
+          };
+        }
+        
+        
+      } catch (error) {
+        console.error('Failed to load API data:', error);
+        
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", async function () {
+      const ageSelect = document.getElementById("grade");
+      const envSelect = document.getElementById("environment");
+
+      // Populate age dropdown
+      await loadApiData();
+      for (const age in apiData) {
+        const option = document.createElement("option");
+        option.value = age;
+        option.text = `${age} (${apiData[age].age_range})`;
+        ageSelect.appendChild(option);
+      }
+
+      // Update environments on age change
+      ageSelect.addEventListener("change", function () {
+        const selectedAge = this.value;
+
+        // Clear previous environments
+        envSelect.innerHTML = `<option value="" disabled selected>Select Environment</option>`;
+
+        if (selectedAge && apiData[selectedAge]) {
+            console.log(apiData[selectedAge].lighting_data);
+            
+          const environments =
+            apiData[selectedAge].lighting_data.recommendation_levels.highly_recommended.environments;
+          for (const env in environments) {
+            const option = document.createElement("option");
+            option.value = env;
+            option.text = env.charAt(0).toUpperCase() + env.slice(1);
+            envSelect.appendChild(option);
+          }
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+
+  <h2>Select Age Group and Environment</h2>
+
+  <label for="grade">Grade:</label>
+  <select id="grade">
+    <option value="" disabled selected>Select Grade</option>
+  </select>
+
+  <br><br>
+
+  <label for="environment">Environment:</label>
+  <select id="environment">
+    <option value="" disabled selected>Select Environment</option>
+  </select>
+
+</body>
+</html>

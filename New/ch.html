@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <select name="slc1" id="slc1" onchange="_1sel();"></select>
+    <select name="slc2" id="slc2" onchange="_2sel();"></select>
+    <!-- <select name="slc3" id="slc3" onchange="_3sel();"></select> -->
+    <!-- <select name="slc4" id="slc4"></select> -->
+     <button onclick="sh()"> show </button>
+    <script>
+    //just call the method when the select change
+        var slc1 = document.getElementById("slc1");
+        var slc2 = document.getElementById("slc2");
+        // var slc3 = document.getElementById("slc3");
+        // var slc4 = document.getElementById("slc4");
+
+        var dataObj = {//is a valid json
+            "brazil": {
+                "sp": {
+                    "sp1": ["sp1A", "sp1B"],
+                    "sp2": ["sp2A"]
+                },
+                "mg": {
+                    "mg1": ["mg1A", "mg1B"],
+                    "mg2": ["mg2A", "mg1B"]
+                },
+                "rj": {
+                    "rj1": ["rj1A", "rj1B", "rj1C"],
+                    "rj2": ["rj2A", "rj1B"]
+                }
+            },
+            "usa": {
+                "ny": {
+                    "ny1": ["ny1A","ny1B","ny1C"],
+                    "ny2": ["ny2A"]
+                },
+                "tx": {
+                    "tx1": ["tx1A"]
+                }
+            },
+            "uk": {
+                "ld": {
+                    "ld1": ["ld1A","ld1B","ld1C"],
+                    "ld2": ["ld2A"]
+                },
+                "hm": {
+                    "hm1": ["hm1A", "hm1B"]
+                }
+            }
+        }
+
+        let ctrs = Object.keys(dataObj);//countries - Object.keys return an array
+        cmo(ctrs, slc1);//push values to select one
+        _1sel();//call the first method of chain
+        //slc1.value = "usa"
+        //slc1.dispatchEvent(new Event('change'));
+
+        function _1sel() {
+            slc2.innerHTML = "";//clear the target select
+            let cities = Object.keys(dataObj[slc1.value]);//get the cities from country as array
+            cmo(cities, slc2);//push values to select two
+            _2sel();//call the second method of chain
+        }
+
+        function _2sel() {
+            // slc3.innerHTML = "";//clear
+            // let zones = Object.keys(dataObj[slc1.value][slc2.value]);//get the zones from country and city as array
+            // cmo(zones, slc3);//push values to select three
+            // _3sel();//call the third method of chain
+        }
+
+        // function _3sel() {
+        //     slc4.innerHTML = "";//clear
+        //     let staffs = dataObj[slc1.value][slc2.value][slc3.value];//no Obj.keys here, just get the array of values
+        //     cmo(staffs, slc4);//push values to select four
+        // }
+
+        function cmo(arr, s) {//create options and add to select
+            arr.forEach(o => {
+                let opt = document.createElement("option");
+                opt.value = o;
+                opt.innerHTML = o;
+                s.add(opt);
+            });
+        }
+    </script>
+    <script>
+        function sh(){
+            console.log(slc1.value);
+            console.log(slc2.value);
+        }
+
+        // Function to load API data
+        async function loadApiData() {
+            try {
+                const [dataResponse, lightingResponse] = await Promise.all([
+                    fetch('api/newData.json'),
+                    fetch('api/lighting.json')
+                ]);
+                
+                const dataJson = await dataResponse.json();
+                const lightingJson = await lightingResponse.json();
+                
+                console.log(dataJson , lightingJson);
+                apiData = {};
+                for (const grade in dataJson) {
+                    apiData[grade] = {
+                        ...dataJson[grade],
+                        lighting_data: lightingJson[grade] || {}
+                    };
+                }
+                
+                
+            } catch (error) {
+                console.error('Failed to load API data:', error);
+                
+            }
+        }
+
+
+    </script>
+
+</body>
+</html>
