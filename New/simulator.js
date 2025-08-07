@@ -768,7 +768,7 @@ function processImageWithLighting(cct, cri, glare, flicker) {
     
     // Calculate glare brightness factor with dramatic increase above 19
     let brightnessMultiplier = 1.0;
-    if (glare <= 19) {
+    if (glare <= 16) {
         // Normal brightness for low glare
         brightnessMultiplier = 1.0 + (glare / 19) * 0.3; // 1.0 to 1.3
     } else {
