@@ -285,8 +285,8 @@
               "recommendation": "Plan consistent lighting exposure."
             },
             "emotion": {
-              "happyPerson": "images/kinder/classroom/happy/happy.jpeg",
-              "sadPerson": "images/kinder/classroom/sad/sad.jpeg"
+              "happyPerson": "images/primary/classroom/happy/happy.jpeg",
+              "sadPerson": "images/primary/classroom/sad/sad.jpeg"
             }
           }
         }
