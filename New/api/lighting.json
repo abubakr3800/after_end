@@ -198,10 +198,7 @@
         "environments": {
           "classroom": {
             "images": [
-              "images/primary/class/multiracial-group-of-kids-at-primary-school-playful-schoolers-enjoying-school-time-and-lesson-with-teacher-and-classmates-DMDF02383.jpg",
-              "images/primary/class/IMG_7415.webp",
-              "images/primary/class/Untitled-design-6-2000x833.png",
-              "images/primary/class/elementary-school-classroom-design.jpg"
+              "images/primary/class/IMG_7415.webp"
             ],
             "CRI": {
               "range": {
@@ -288,6 +285,96 @@
               "happyPerson": "images/kinder/classroom/happy/happy.jpeg",
               "sadPerson": "images/kinder/classroom/sad/sad.jpeg"
             }
+          },
+          "rest room": {
+            "images": [
+              "images/primary/class/IMG_7415.webp"
+            ],
+            "CRI": {
+              "range": {
+                "min": 80,
+                "max": 100,
+                "unit": ""
+              },
+              "reason": "Excellent color rendering.",
+              "recommendation": "Use in sensitive visual tasks."
+            },
+            "CCT": {
+              "range": {
+                "min": 3500,
+                "max": 4000,
+                "unit": "K"
+              },
+              "reason": "Optimal for alertness and concentration.",
+              "recommendation": "Use for reading, exams, or labs."
+            },
+            "Lux": {
+              "range": {
+                "min": 0,
+                "max": 300,
+                "unit": "lux"
+              },
+              "reason": "Excellent visibility for task performance.",
+              "recommendation": "Use in labs and classrooms."
+            },
+            "UGR": {
+              "range": {
+                "min": 0,
+                "max": 19,
+                "unit": ""
+              },
+              "reason": "Minimal glare, optimal comfort.",
+              "recommendation": "Ideal for detailed tasks."
+            },
+            "Flicker": {
+              "range": {
+                "min": 1,
+                "max": 8,
+                "unit": "%"
+              },
+              "reason": "No visible flicker.",
+              "recommendation": "Use flicker-free drivers."
+            },
+            "Uniformity": {
+              "range": {
+                "min": 0.6,
+                "max": 1,
+                "unit": ""
+              },
+              "reason": "Excellent light balance.",
+              "recommendation": "Supports consistent visibility."
+            },
+            "Melanopic_EDI": {
+              "range": {
+                "min": 250,
+                "max": 350,
+                "unit": "lux"
+              },
+              "reason": "Stimulates alertness and circadian health.",
+              "recommendation": "Use in learning periods."
+            },
+            "Vertical_Illuminance": {
+              "range": {
+                "min": 300,
+                "max": 500,
+                "unit": "lux"
+              },
+              "reason": "Improves face visibility and comfort.",
+              "recommendation": "Use for classrooms and labs."
+            },
+            "Exposure_Duration": {
+              "range": {
+                "min": 6,
+                "max": 8,
+                "unit": "hours"
+              },
+              "reason": "Matches biological and academic schedules.",
+              "recommendation": "Plan consistent lighting exposure."
+            },
+            "emotion": {
+              "happyPerson": "images/primary/rest/happy/happy.jpeg",
+              "sadPerson": "images/primary/rest/sad/sad.jpeg"
+            }
           }
         }
       }
@@ -301,11 +388,7 @@
           "environments": {
             "laboratory": {
               "images": [
-                "images/adults/lab/520358_f0254669students_pouring_sample_into_flask_in_laboratory_453957.jpg",
-                "images/adults/lab/istockphoto-469951129-612x612.jpg",
-                "images/adults/lab/school-boy-conducting-science-experiment-beaker-petri-dish-education-laboratory-chemistry-student-learning-research-374389204.webp",
-                "images/adults/lab/istockphoto-1278973936-612x612.jpg",
-                "images/adults/lab/image-asset.webp"
+                "images/adults/lab/istockphoto-469951129-612x612.jpg"
               ],
               "CRI": {
                 "range": {
@@ -392,9 +475,100 @@
                 "happyPerson": "images/adults/lab/happy/happy.jpeg",
                 "sadPerson": "images/adults/lab/sad/sad.jpeg"
               }
+            },
+            "music room": {
+              "images": [
+                "images/adults/lab/istockphoto-469951129-612x612.jpg"
+              ],
+              "CRI": {
+                "range": {
+                  "min": 90,
+                  "max": 100,
+                  "unit": ""
+                },
+                "reason": "Excellent color rendering.",
+                "recommendation": "Use in sensitive visual tasks."
+              },
+              "CCT": {
+                "range": {
+                  "min": 3500,
+                  "max": 5500,
+                  "unit": "K"
+                },
+                "reason": "Optimal for alertness and concentration.",
+                "recommendation": "Use for reading, exams, or labs."
+              },
+              "Lux": {
+                "range": {
+                  "min": 300,
+                  "max": 500,
+                  "unit": "lux"
+                },
+                "reason": "Excellent visibility for task performance.",
+                "recommendation": "Use in labs and classrooms."
+              },
+              "UGR": {
+                "range": {
+                  "min": 0,
+                  "max": 19,
+                  "unit": ""
+                },
+                "reason": "Minimal glare, optimal comfort.",
+                "recommendation": "Ideal for detailed tasks."
+              },
+              "Flicker": {
+                "range": {
+                  "min": 1,
+                  "max": 8,
+                  "unit": "%"
+                },
+                "reason": "No visible flicker.",
+                "recommendation": "Use flicker-free drivers."
+              },
+              "Uniformity": {
+                "range": {
+                  "min": 0.7,
+                  "max": 1,
+                  "unit": ""
+                },
+                "reason": "Excellent light balance.",
+                "recommendation": "Supports consistent visibility."
+              },
+              "Melanopic_EDI": {
+                "range": {
+                  "min": 250,
+                  "max": 350,
+                  "unit": "lux"
+                },
+                "reason": "Stimulates alertness and circadian health.",
+                "recommendation": "Use in learning periods."
+              },
+              "Vertical_Illuminance": {
+                "range": {
+                  "min": 500,
+                  "max": 1000,
+                  "unit": "lux"
+                },
+                "reason": "Improves face visibility and comfort.",
+                "recommendation": "Use for classrooms and labs."
+              },
+              "Exposure_Duration": {
+                "range": {
+                  "min": 6,
+                  "max": 8,
+                  "unit": "hours"
+                },
+                "reason": "Matches biological and academic schedules.",
+                "recommendation": "Plan consistent lighting exposure."
+              },
+              "emotion": {
+                "happyPerson": "images/adults/music/happy/happy.jpeg",
+                "sadPerson": "images/adults/music/sad/sad.jpeg"
+              }
             }
+          }
           }
         }
       }
     }
-  }
+  
