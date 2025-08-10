@@ -25,8 +25,8 @@
                 "max": 3500,
                 "unit": "K"
               },
-              "reason": "Optimal for alertness and concentration.",
-              "recommendation": "Use for reading, exams, or labs."
+              "reason": "Calming while Playing ",
+              "recommendation": "Use for Playing "
             },
             "Lux": {
               "range": {
@@ -34,17 +34,17 @@
                 "max": 500,
                 "unit": "lux"
               },
-              "reason": "Excellent visibility for task performance.",
-              "recommendation": "Use in labs and classrooms."
+              "reason": "Excellent visibility for objects",
+              "recommendation": "Use in Play room."
             },
             "UGR": {
               "range": {
                 "min": 0,
-                "max": 16,
+                "max": 19,
                 "unit": ""
               },
               "reason": "Minimal glare, optimal comfort.",
-              "recommendation": "Ideal for detailed tasks."
+              "recommendation": "Ideal for detailed object."
             },
             "Flicker": {
               "range": {
@@ -107,7 +107,7 @@
                 "unit": ""
               },
               "reason": "Excellent color rendering.",
-              "recommendation": "Use in sensitive visual tasks."
+              "recommendation": "Use in true colors shade while painting"
             },
             "CCT": {
               "range": {
@@ -116,7 +116,7 @@
                 "unit": "K"
               },
               "reason": "Optimal for alertness and concentration.",
-              "recommendation": "Use for reading, exams, or labs."
+              "recommendation": "Use for Painting."
             },
             "Lux": {
               "range": {
@@ -124,13 +124,13 @@
                 "max": 500,
                 "unit": "lux"
               },
-              "reason": "Excellent visibility for task performance.",
-              "recommendation": "Use in labs and classrooms."
+              "reason": "Excellent visibility for Object Painting.",
+              "recommendation": "Use in Painting room"
             },
             "UGR": {
               "range": {
                 "min": 0,
-                "max": 16,
+                "max": 19,
                 "unit": ""
               },
               "reason": "Minimal glare, optimal comfort.",
@@ -225,12 +225,12 @@
                 "unit": "lux"
               },
               "reason": "Excellent visibility for task performance.",
-              "recommendation": "Use in labs and classrooms."
+              "recommendation": "Use in classrooms."
             },
             "UGR": {
               "range": {
                 "min": 0,
-                "max": 16,
+                "max": 19,
                 "unit": ""
               },
               "reason": "Minimal glare, optimal comfort.",
@@ -282,8 +282,8 @@
               "recommendation": "Plan consistent lighting exposure."
             },
             "emotion": {
-              "happyPerson": "images/kinder/classroom/happy/happy.jpeg",
-              "sadPerson": "images/kinder/classroom/sad/sad.jpeg"
+              "happyPerson": "images/primary/classroom/happy/happy.jpeg",
+              "sadPerson": "images/primary/classroom/sad/sad.jpeg"
             }
           },
           "rest room": {
@@ -406,7 +406,7 @@
                   "unit": "K"
                 },
                 "reason": "Optimal for alertness and concentration.",
-                "recommendation": "Use for reading, exams, or labs."
+                "recommendation": "Use for science labs."
               },
               "Lux": {
                 "range": {
@@ -415,12 +415,12 @@
                   "unit": "lux"
                 },
                 "reason": "Excellent visibility for task performance.",
-                "recommendation": "Use in labs and classrooms."
+                "recommendation": "Use in science Labs"
               },
               "UGR": {
                 "range": {
                   "min": 0,
-                  "max": 16,
+                  "max": 19,
                   "unit": ""
                 },
                 "reason": "Minimal glare, optimal comfort.",
@@ -460,7 +460,7 @@
                   "unit": "lux"
                 },
                 "reason": "Improves face visibility and comfort.",
-                "recommendation": "Use for classrooms and labs."
+                "recommendation": "Use for science Labs."
               },
               "Exposure_Duration": {
                 "range": {
@@ -496,7 +496,7 @@
                   "unit": "K"
                 },
                 "reason": "Optimal for alertness and concentration.",
-                "recommendation": "Use for reading, exams, or labs."
+                "recommendation": "Use for music room."
               },
               "Lux": {
                 "range": {
@@ -505,7 +505,7 @@
                   "unit": "lux"
                 },
                 "reason": "Excellent visibility for task performance.",
-                "recommendation": "Use in labs and classrooms."
+                "recommendation": "Use in music room."
               },
               "UGR": {
                 "range": {
@@ -550,7 +550,7 @@
                   "unit": "lux"
                 },
                 "reason": "Improves face visibility and comfort.",
-                "recommendation": "Use for classrooms and labs."
+                "recommendation": "Use for music room."
               },
               "Exposure_Duration": {
                 "range": {
