@@ -449,7 +449,10 @@ function updateParameterValidation(paramName, currentValue, paramDataArray, stat
         if (bestRating === 'bad' && !paramDataArray.some(p => p.range && currentValue >= p.range.min && currentValue <= p.range.max)) {
             // Value is outside all ranges
             const { min, max } = bestMatch.range;
-            statusText = `BAD - Outside recommended range (${min}-${max} ${getUnit(paramName)})`;
+            console.log(paramDataArray);
+        
+            // statusText = `BAD - Outside recommended range (${min}-${max} ${getUnit(paramName)})`;
+            statusText = `BAD - Outside recommended range (${ paramDataArray[0].range.unit == "%" ? ( 1 / max) * 10000 : min}-${ paramDataArray[0].range.unit == "%" ? ( 1 /min) * 10000 : max} ${getUnit(paramDataArray[0])})`;
         } else {
             // Value is within a range
             statusText = `${bestRating.toUpperCase()} - ${reason}`;
